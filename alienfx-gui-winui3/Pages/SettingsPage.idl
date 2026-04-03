@@ -1,1 +1,1 @@
-namespace AlienFX { runtimeclass SettingsPage : Microsoft.UI.Xaml.Controls.Page { SettingsPage(); } }
+namespace AlienFX { [default_interface] runtimeclass SettingsPage : Microsoft.UI.Xaml.Controls.Page { SettingsPage(); } }
