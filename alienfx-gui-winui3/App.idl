@@ -1,7 +1,6 @@
 namespace AlienFX
 {
-    [default_interface]
-    runtimeclass App : Microsoft.UI.Xaml.Application
+    runtimeclass App
     {
         App();
     }
