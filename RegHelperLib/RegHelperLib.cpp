@@ -14,8 +14,8 @@ DWORD GetRegData(HKEY key, int vindex, char* name, byte** data) {
 	return 0;
 }
 
-string GetRegString(byte* data, int len) {
-	string res;
+std::string GetRegString(byte* data, int len) {
+	std::string res;
 	if (!data[len - 1])
 		len--;
 	res.resize(len);

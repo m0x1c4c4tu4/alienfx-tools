@@ -2,7 +2,7 @@
 #include <windowsx.h>
 #include <WinInet.h>
 
-using namespace std;
+
 
 #pragma comment(lib,"Wininet.lib")
 #pragma comment(lib,"Version.lib")
@@ -127,7 +127,7 @@ void ResetDPIScale(LPWSTR cmdLine) {
 	}
 }
 
-void ShowNotification(NOTIFYICONDATA* niData, string title, string message) {
+void ShowNotification(NOTIFYICONDATA* niData, std::string title, std::string message) {
 	strcpy_s(niData->szInfoTitle, title.c_str());
 	strcpy_s(niData->szInfo, message.c_str());
 	niData->uFlags |= NIF_INFO;
@@ -151,9 +151,9 @@ DWORD WINAPI CUpdateCheck(LPVOID lparam) {
 			NULL, 0, INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_CACHE_WRITE, NULL)) {
 			if (InternetReadFile(req, buf, 254, &byteRead)) {
 				buf[byteRead] = 0;
-				string res = buf;
+				std::string res = buf;
 				size_t pos = res.find("\"name\":");
-				if (pos != string::npos) {
+				if (pos != std::string::npos) {
 					//isConnectionFailed = false;
 					res = res.substr(pos + 8);
 					res = res.substr(0, res.find("\""));
@@ -183,12 +183,12 @@ DWORD WINAPI CUpdateCheck(LPVOID lparam) {
 	return 0;
 }
 
-bool WindowsStartSet(bool kind, string name) {
+bool WindowsStartSet(bool kind, std::string name) {
 	if (kind) {
 		char* pathBuffer = new char[2048];
 		GetModuleFileName(NULL, pathBuffer, 2047);
 		bool res = ShellExecute(NULL, "runas", "powershell.exe", ("Register-ScheduledTask -TaskName \"" + name + "\" -trigger $(New-ScheduledTaskTrigger -Atlogon) -settings $(New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit 0) -action $(New-ScheduledTaskAction -Execute '"
-			+ string(pathBuffer) + /*"' -Argument '-d'*/"') -force -RunLevel Highest").c_str(), NULL, SW_HIDE) > (HINSTANCE)32;
+			+ std::string(pathBuffer) + /*"' -Argument '-d'*/"') -force -RunLevel Highest").c_str(), NULL, SW_HIDE) > (HINSTANCE)32;
 		delete[] pathBuffer;
 		return res;
 	}
@@ -197,8 +197,8 @@ bool WindowsStartSet(bool kind, string name) {
 	}
 }
 
-string GetAppVersion(bool isFile) {
-	string res;
+std::string GetAppVersion(bool isFile) {
+	std::string res;
 
 	//HMODULE hInst = GetModuleHandle(NULL);
 	HGLOBAL hResData = LoadResource(hInst, FindResource(hInst, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION));
@@ -220,10 +220,10 @@ string GetAppVersion(bool isFile) {
 			LS = lpFfi->dwProductVersionLS;
 		}
 
-		res = to_string(HIWORD(MS)) + "."
-			+ to_string(LOWORD(MS)) + "."
-			+ to_string(HIWORD(LS)) + "."
-			+ to_string(LOWORD(LS));
+		res = std::to_string(HIWORD(MS)) + "."
+			+ std::to_string(LOWORD(MS)) + "."
+			+ std::to_string(HIWORD(LS)) + "."
+			+ std::to_string(LOWORD(LS));
 
 		FreeResource(hResData);
 	}
@@ -251,7 +251,7 @@ void CreateToolTip(HWND hwndParent, HWND& oldTip, int value)
 	SetSlider(oldTip, value);
 }
 
-HWND SetToolTip(HWND tt, string value) {
+HWND SetToolTip(HWND tt, std::string value) {
 	if (tt) {
 		TOOLINFO ti{ sizeof(TOOLINFO) };
 		SendMessage(tt, TTM_ENUMTOOLS, 0, (LPARAM)&ti);
@@ -263,7 +263,7 @@ HWND SetToolTip(HWND tt, string value) {
 }
 
 void SetSlider(HWND tt, int value) {
-	HWND parent = SetToolTip(tt, to_string(value));
+	HWND parent = SetToolTip(tt, std::to_string(value));
 	if (parent) {
 		SendMessage(parent, TBM_SETPOS, true, value);
 	}
@@ -284,7 +284,7 @@ void UpdateCombo(HWND ctrl, const char* items[], int sel, const int val[]) {
 	}
 }
 
-void UpdateCombo(HWND ctrl, const string* items, int sel, vector<int> val) {
+void UpdateCombo(HWND ctrl, const std::string* items, int sel, std::vector<int> val) {
 	ComboBox_ResetContent(ctrl);
 	for (int i = 0; items[i].size(); i++) {
 		ComboBox_AddString(ctrl, items[i].c_str());
