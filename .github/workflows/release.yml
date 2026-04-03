@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore alienfx-tools.sln
+
+      - name: Build Solution
+        run: msbuild alienfx-tools.sln /p:Configuration=Release /p:Platform=x64 /v:minimal /m
+
+      - name: Collect binaries
+        run: |
+          New-Item -ItemType Directory -Force -Path release
+          $bins = Get-ChildItem -Path . -Recurse -Include "*.exe","*.dll","*.pdb" | Where-Object {
+            $_.FullName -notmatch '\\packages\\' -and
+            $_.FullName -notmatch '\\obj\\' -and
+            $_.FullName -notmatch '\\x86\\'
+          }
+          foreach ($bin in $bins) {
+            Copy-Item $bin.FullName release/ -Force
+          }
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

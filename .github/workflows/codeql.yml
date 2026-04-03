@@ -1,0 +1,66 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '**/*.cpp'
+      - '**/*.c'
+      - '**/*.h'
+      - '**/*.hpp'
+      - '**/*.vcxproj'
+      - '**/*.sln'
+      - '.github/workflows/codeql.yml'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - '**/*.cpp'
+      - '**/*.c'
+      - '**/*.h'
+      - '**/*.hpp'
+      - '**/*.vcxproj'
+      - '**/*.sln'
+  schedule:
+    - cron: '0 12 * * 1'
+
+jobs:
+  analyze:
+    name: CodeQL Analysis
+    runs-on: windows-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['cpp']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore alienfx-tools.sln
+
+      - name: Build
+        run: msbuild alienfx-tools.sln /p:Configuration=Release /p:Platform=x64 /v:minimal /m
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
