@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Dialogs { partial runtimeclass ZoneSelectDialog; } }
+namespace AlienFX { namespace Dialogs { runtimeclass ZoneSelectDialog { ZoneSelectDialog(); } } }

@@ -1,1 +1,1 @@
-namespace AlienFX { partial runtimeclass GridPage; }
+namespace AlienFX { runtimeclass GridPage { GridPage(); } }

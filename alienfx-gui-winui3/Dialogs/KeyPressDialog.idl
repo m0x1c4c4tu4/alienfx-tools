@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Dialogs { partial runtimeclass KeyPressDialog; } }
+namespace AlienFX { namespace Dialogs { runtimeclass KeyPressDialog { KeyPressDialog(); } } }

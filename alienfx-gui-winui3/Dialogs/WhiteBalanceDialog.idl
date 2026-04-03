@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Dialogs { partial runtimeclass WhiteBalanceDialog; } }
+namespace AlienFX { namespace Dialogs { runtimeclass WhiteBalanceDialog { WhiteBalanceDialog(); } } }

@@ -1,1 +1,1 @@
-namespace AlienFX { partial runtimeclass SettingsPage; }
+namespace AlienFX { runtimeclass SettingsPage { SettingsPage(); } }

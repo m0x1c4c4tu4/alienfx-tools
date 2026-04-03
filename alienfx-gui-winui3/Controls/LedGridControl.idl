@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Controls { partial runtimeclass LedGridControl; } }
+namespace AlienFX { namespace Controls { runtimeclass LedGridControl { LedGridControl(); } } }

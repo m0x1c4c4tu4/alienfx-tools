@@ -1,1 +1,1 @@
-namespace AlienFX { partial runtimeclass HapticsPage; }
+namespace AlienFX { runtimeclass HapticsPage { HapticsPage(); } }

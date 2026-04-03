@@ -1,1 +1,1 @@
-namespace AlienFX { partial runtimeclass ProfilesPage; }
+namespace AlienFX { runtimeclass ProfilesPage { ProfilesPage(); } }

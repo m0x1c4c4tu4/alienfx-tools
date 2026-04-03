@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Controls { partial runtimeclass FreqBarsControl; } }
+namespace AlienFX { namespace Controls { runtimeclass FreqBarsControl { FreqBarsControl(); } } }

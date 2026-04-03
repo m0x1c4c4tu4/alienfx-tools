@@ -1,1 +1,1 @@
-namespace AlienFX { partial runtimeclass LightingPage; }
+namespace AlienFX { runtimeclass LightingPage { LightingPage(); } }
