@@ -234,7 +234,7 @@ BOOL CALLBACK ZoneSelectionDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 					if (lPoint->uNewState & LVIS_SELECTED) {
 						int neweItem = (int)lPoint->lParam;
 						// gauge and spectrum.
-						if (activeMapping = conf->FindMapping(neweItem)) {
+						if ((activeMapping = conf->FindMapping(neweItem)) != nullptr) {
 							CheckDlgButton(hDlg, IDC_CHECK_SPECTRUM, activeMapping->gaugeflags & GAUGE_GRADIENT);
 							CheckDlgButton(hDlg, IDC_CHECK_REVERSE, activeMapping->gaugeflags & GAUGE_REVERSE);
 							ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COMBO_GAUGE), activeMapping->gauge);
@@ -242,7 +242,7 @@ BOOL CALLBACK ZoneSelectionDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 						}
 					}
 					else
-						if (ListView_GetItemState(lPoint->hdr.hwndFrom, lPoint->iItem, LVIS_FOCUSED)) {
+						if ((ListView_GetItemState(lPoint->hdr.hwndFrom, lPoint->iItem, LVIS_FOCUSED)) != 0) {
 							ListView_SetItemState(lPoint->hdr.hwndFrom, lPoint->iItem, LVIS_SELECTED, LVIS_SELECTED);
 						}
 				}
