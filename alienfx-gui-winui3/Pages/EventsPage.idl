@@ -1,1 +1,1 @@
-namespace AlienFX { [default_interface] runtimeclass EventsPage : Microsoft.UI.Xaml.Controls.Page { EventsPage(); } }
+namespace AlienFX { runtimeclass EventsPage : Microsoft.UI.Xaml.Controls.Page { EventsPage(); } }

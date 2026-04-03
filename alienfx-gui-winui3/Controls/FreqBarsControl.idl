@@ -1,1 +1,1 @@
-namespace AlienFX.Controls { [default_interface] runtimeclass FreqBarsControl : Microsoft.UI.Xaml.Controls.UserControl { FreqBarsControl(); } }
+namespace AlienFX { namespace Controls { runtimeclass FreqBarsControl : Microsoft.UI.Xaml.Controls.UserControl { FreqBarsControl(); } } }

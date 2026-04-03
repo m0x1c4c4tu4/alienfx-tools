@@ -1,1 +1,1 @@
-namespace AlienFX.Dialogs { [default_interface] runtimeclass KeyPressDialog : Microsoft.UI.Xaml.Controls.ContentDialog { KeyPressDialog(); } }
+namespace AlienFX { namespace Dialogs { runtimeclass KeyPressDialog : Microsoft.UI.Xaml.Controls.ContentDialog { KeyPressDialog(); } } }

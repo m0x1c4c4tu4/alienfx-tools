@@ -1,1 +1,1 @@
-namespace AlienFX.Controls { [default_interface] runtimeclass GaugeControl : Microsoft.UI.Xaml.Controls.UserControl { GaugeControl(); } }
+namespace AlienFX { namespace Controls { runtimeclass GaugeControl : Microsoft.UI.Xaml.Controls.UserControl { GaugeControl(); } } }

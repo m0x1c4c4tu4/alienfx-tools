@@ -1,1 +1,1 @@
-namespace AlienFX.Controls { [default_interface] runtimeclass DeviceCard : Microsoft.UI.Xaml.Controls.UserControl { DeviceCard(); } }
+namespace AlienFX { namespace Controls { runtimeclass DeviceCard : Microsoft.UI.Xaml.Controls.UserControl { DeviceCard(); } } }
