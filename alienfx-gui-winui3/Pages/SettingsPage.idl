@@ -1,1 +1,1 @@
-namespace AlienFX { runtimeclass SettingsPage : Microsoft.UI.Xaml.Controls.Page { SettingsPage(); } }
+namespace AlienFX { runtimeclass SettingsPage { SettingsPage(); } }

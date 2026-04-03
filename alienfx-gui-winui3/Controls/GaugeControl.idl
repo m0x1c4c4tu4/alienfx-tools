@@ -1,1 +1,1 @@
-namespace AlienFX::Controls { runtimeclass GaugeControl : Microsoft.UI.Xaml.Controls.UserControl { GaugeControl(); } }
+namespace AlienFX::Controls { runtimeclass GaugeControl { GaugeControl(); } }
