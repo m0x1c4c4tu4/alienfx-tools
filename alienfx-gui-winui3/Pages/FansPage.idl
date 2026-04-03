@@ -1,1 +1,8 @@
-namespace AlienFX { [default_interface] runtimeclass FansPage : Microsoft.UI.Xaml.Controls.Page { FansPage(); } }
+namespace AlienFX
+{
+    [default_interface]
+    runtimeclass FansPage : Microsoft.UI.Xaml.Controls.Page
+    {
+        FansPage();
+    }
+}

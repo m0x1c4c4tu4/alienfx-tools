@@ -1,1 +1,8 @@
-namespace AlienFX { [default_interface] runtimeclass HapticsPage : Microsoft.UI.Xaml.Controls.Page { HapticsPage(); } }
+namespace AlienFX
+{
+    [default_interface]
+    runtimeclass HapticsPage : Microsoft.UI.Xaml.Controls.Page
+    {
+        HapticsPage();
+    }
+}

@@ -1,1 +1,11 @@
-namespace AlienFX { namespace Dialogs { [default_interface] runtimeclass ZoneSelectDialog : Microsoft.UI.Xaml.Controls.ContentDialog { ZoneSelectDialog(); } } }
+namespace AlienFX
+{
+    namespace Dialogs
+    {
+        [default_interface]
+        runtimeclass ZoneSelectDialog : Microsoft.UI.Xaml.Controls.ContentDialog
+        {
+            ZoneSelectDialog();
+        }
+    }
+}

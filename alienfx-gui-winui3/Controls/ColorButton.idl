@@ -1,1 +1,11 @@
-namespace AlienFX { namespace Controls { [default_interface] runtimeclass ColorButton : Microsoft.UI.Xaml.Controls.UserControl { ColorButton(); } } }
+namespace AlienFX
+{
+    namespace Controls
+    {
+        [default_interface]
+        runtimeclass ColorButton : Microsoft.UI.Xaml.Controls.UserControl
+        {
+            ColorButton();
+        }
+    }
+}
