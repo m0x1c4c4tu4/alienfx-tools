@@ -19,7 +19,7 @@ namespace AlienFan_SDK {
 			};
 			WORD sid; // LOBYTE - index, HIBYTE - type: 0 = ESIF, 1 = AWCC, 2 - Disk, 3 - AMD, 4 = OHM
 		};
-		std::std::string name;
+		std::string name;
 		BSTR instance; // for ESIF/OHM/SSD sensors
 		BSTR valueName;
 	};

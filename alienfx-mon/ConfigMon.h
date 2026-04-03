@@ -1,11 +1,11 @@
 #pragma once
 #include <map>
-#include <string>
+#include <std::string>
 #include <wtypes.h>
 #include "resource.h"
 #include "ConfigFan.h"
 
-using namespace std;
+
 
 extern HINSTANCE hInst;
 
@@ -23,7 +23,7 @@ struct SENID {
 };
 
 struct SENSOR {
-	string sname;
+	std::string sname;
 	int min = NO_SEN_VALUE, max = NO_SEN_VALUE, cur = NO_SEN_VALUE;
 	bool changed = true;
 	union {
@@ -43,7 +43,7 @@ struct SENSOR {
 		};
 		DWORD alarmPoint = 0;
 	};
-	string name;
+	std::string name;
 	bool alarming = false;
 	DWORD traycolor = 0xffffff;
 	NOTIFYICONDATA* niData = NULL;
