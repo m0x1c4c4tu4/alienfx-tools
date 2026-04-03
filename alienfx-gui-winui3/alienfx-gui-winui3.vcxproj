@@ -233,7 +233,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Midl Include="App.idl" />
     <Midl Include="Controls\ColorButton.idl" />
     <Midl Include="Controls\LedGridControl.idl" />
     <Midl Include="Controls\FanCurveControl.idl" />

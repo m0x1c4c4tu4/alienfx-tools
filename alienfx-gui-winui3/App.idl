@@ -1,7 +1,0 @@
-namespace AlienFX
-{
-    runtimeclass App
-    {
-        App();
-    }
-}
