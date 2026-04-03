@@ -53,11 +53,11 @@ jobs:
 
       - name: Restore NuGet packages
         run: |
-          nuget restore alienfx-gui-winui3\alienfx-gui-winui3.vcxproj
+          nuget restore alienfx-tools.sln
 
       - name: Build WinUI 3 Project
         run: |
-          msbuild alienfx-gui-winui3\alienfx-gui-winui3.vcxproj `
+          msbuild alienfx-tools.sln `
             /p:Configuration=${{ matrix.configuration }} `
             /p:Platform=${{ matrix.platform }} `
             /p:WindowsPackageType=None `
