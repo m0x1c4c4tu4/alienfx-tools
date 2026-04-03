@@ -1,36 +1,36 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <std::std::string>
+#include <std::vector>
 #include <wbemidl.h>
 #include <wtypes.h>
 
-using namespace std;
 
-#define byte BYTE
+
+#define BYTE BYTE
 
 namespace AlienFan_SDK {
 
 	struct ALIENFAN_SEN_INFO {
 		union {
 			struct {
-				byte index;
-				byte type;
+				BYTE index;
+				BYTE type;
 			};
 			WORD sid; // LOBYTE - index, HIBYTE - type: 0 = ESIF, 1 = AWCC, 2 - Disk, 3 - AMD, 4 = OHM
 		};
-		string name;
+		std::std::string name;
 		BSTR instance; // for ESIF/OHM/SSD sensors
 		BSTR valueName;
 	};
 
 	struct ALIENFAN_FAN_INFO {
-		byte id, type;
+		BYTE id, type;
 	};
 
 	union ALIENFAN_INTERFACE {
 		struct {
-			byte sub,
+			BYTE sub,
 			     arg1,
 			     arg2,
 			     reserved;
@@ -40,8 +40,8 @@ namespace AlienFan_SDK {
 
 	class Control {
 	private:
-		byte sysType;
-		void EnumSensors(IWbemServices* srv, const wchar_t* sname, byte type);
+		BYTE sysType;
+		void EnumSensors(IWbemServices* srv, const wchar_t* sname, BYTE type);
 	public:
 		VARIANT m_instancePath{};
 		IWbemServices* m_WbemServices = NULL, * m_OHMService = NULL, * m_DiskService = NULL;
@@ -51,7 +51,7 @@ namespace AlienFan_SDK {
 			isTcc = false,
 			isXMP = false,
 			isGmode = false;
-		byte maxTCC, maxOffset;
+		BYTE maxTCC, maxOffset;
 		DWORD systemID;
 		Control();
 		~Control();
@@ -77,7 +77,7 @@ namespace AlienFan_SDK {
 
 		// Set boost value for the fan index fanID at fans[].
 		// Result: value or error
-		int SetFanBoost(int fanID, byte value);
+		int SetFanBoost(int fanID, BYTE value);
 
 		// Get temperature value for the sensor index TanID at sensors[]
 		// Result: temperature value or error
@@ -89,7 +89,7 @@ namespace AlienFan_SDK {
 
 		// Set system power profile to defined power code (NOT level)
 		// Result: raw value set or error
-		int SetPower(byte level);
+		int SetPower(BYTE level);
 
 		// Get current system power value.
 		// Result: power value (raw true) or index in powers[] (raw false) or error
@@ -109,21 +109,21 @@ namespace AlienFan_SDK {
 		int GetTCC();
 
 		// Set TCC value, if possible
-		int SetTCC(byte tccValue);
+		int SetTCC(BYTE tccValue);
 
 		// Get current XMP profile
 		int GetXMP();
 
 		// Set current XMP profile
-		int SetXMP(byte memXMP);
+		int SetXMP(BYTE memXMP);
 
 		// Call custom Alienware method trough WMI
-		int CallWMIMethod(byte com, byte arg1 = 0, byte arg2 = 0);
+		int CallWMIMethod(BYTE com, BYTE arg1 = 0, BYTE arg2 = 0);
 
 		// Arrays of sensors, fans, max. boosts and power values detected at Probe()
-		vector<ALIENFAN_SEN_INFO> sensors;
-		vector<ALIENFAN_FAN_INFO> fans;
-		vector<byte> powers;
+		std::vector<ALIENFAN_SEN_INFO> sensors;
+		std::vector<ALIENFAN_FAN_INFO> fans;
+		std::vector<BYTE> powers;
 
 		IWbemClassObject* m_AWCCGetObj = NULL;
 	};
@@ -139,17 +139,17 @@ namespace AlienFan_SDK {
 	//	IWbemClassObject* m_InParamaters = NULL;
 	//	IWbemServices* m_WbemServices = NULL;
 	//	VARIANT m_instancePath;
-	//	int CallWMIMethod(byte com, byte* arg1);
+	//	int CallWMIMethod(BYTE com, BYTE* arg1);
 	//public:
 	//	bool isActivated = false;
 
 	//	Lights(Control *ac);
 
 	//	// Set lights brightness, 0..F
-	//	bool SetBrightness(byte brightness);
+	//	bool SetBrightness(BYTE brightness);
 
 	//	// Set color of lights mask defined by id to RGB
-	//	bool SetColor(byte mask, byte r, byte g, byte b, bool save = false);
+	//	bool SetColor(BYTE mask, BYTE r, BYTE g, BYTE b, bool save = false);
 
 	//};
 

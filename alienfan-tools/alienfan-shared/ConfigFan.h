@@ -3,7 +3,7 @@
 #include <map>
 #include "alienfan-sdk.h"
 
-using namespace std;
+
 
 //DWORD WINAPI DPTFInit(LPVOID lparam);
 
@@ -13,7 +13,7 @@ struct fan_point {
 
 struct sen_block {
 	bool active = true;
-	vector<fan_point> points;
+	std::vector<fan_point> points;
 };
 
 struct fan_profile {
@@ -66,8 +66,8 @@ public:
 	fan_profile* lastProf = &prof;
 
 	map<byte, fan_overboost> boosts;
-	map<byte, string> powers;
-	map<WORD, string> sensors;
+	map<byte, std::string> powers;
+	map<WORD, std::string> sensors;
 
 	void* niData = NULL;
 
@@ -75,9 +75,9 @@ public:
 	~ConfigFan();
 
 	void AddSensorCurve(fan_profile* prof, byte fid, WORD sid, byte* data, DWORD lend);
-	void SaveSensorBlocks(HKEY key, string pname, fan_profile* data);
-	string* GetPowerName(int index);
-	string GetSensorName(AlienFan_SDK::ALIENFAN_SEN_INFO* acpi);
+	void SaveSensorBlocks(HKEY key, std::string pname, fan_profile* data);
+	std::string* GetPowerName(int index);
+	std::string GetSensorName(AlienFan_SDK::ALIENFAN_SEN_INFO* acpi);
 	void UpdateBoost(byte fanID, byte boost, WORD rpm);
 	int GetFanScale(byte fanID);
 	void Load();

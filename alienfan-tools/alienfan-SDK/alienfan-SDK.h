@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <std::string>
+#include <std::vector>
 #include <wtypes.h>
 
-using namespace std;
 
-//#define byte BYTE
+
+//#define BYTE BYTE
 #define ALIENFAN_SDK_V1
 
 namespace AlienFan_SDK {
@@ -14,26 +14,26 @@ namespace AlienFan_SDK {
 	struct ALIENFAN_SEN_INFO {
 		union {
 			struct {
-				byte index;
-				byte type;
+				BYTE index;
+				BYTE type;
 			};
 			WORD sid; // LOBYTE - index, HIBYTE - type: 0 = ESIF, 1 = AWCC, 2 - Disk, 3 - AMD, 4 = OHM
 		};
-		string name;
+		std::string name;
 	};
 
 	struct ALIENFAN_FAN_INFO {
-		byte id, type;
+		BYTE id, type;
 	};
 
 	struct ALIENFAN_COMMAND {
-		byte /*short*/ com;
-		byte sub;
+		BYTE /*short*/ com;
+		BYTE sub;
 	};
 
 	struct ALIENFAN_DEVICE {
-		string mainCommand;
-		string gpuCommand;
+		std::string mainCommand;
+		std::string gpuCommand;
 		//bool commandControlled;
 		short delta;
 		ALIENFAN_COMMAND probe;
@@ -58,12 +58,12 @@ namespace AlienFan_SDK {
 
 	struct ALIENFAN_COMMAND_CONTROL {
 		short unlock;
-		string readCom;
-		string writeCom;
-		byte numtemps;
-		byte numfans;
-		vector<string> getTemp;
-		vector<short> fanID;
+		std::string readCom;
+		std::string writeCom;
+		BYTE numtemps;
+		BYTE numfans;
+		std::vector<std::string> getTemp;
+		std::vector<short> fanID;
 	};
 
 	class Control {
@@ -75,14 +75,14 @@ namespace AlienFan_SDK {
 		SC_HANDLE scManager = NULL;
 #endif
 		//int ReadRamDirect(DWORD);
-		//int WriteRamDirect(DWORD, byte);
+		//int WriteRamDirect(DWORD, BYTE);
 
 	public:
 		Control();
 		~Control();
 
 		bool isTcc = false, isXMP = false;
-		byte maxTCC = 100, maxOffset = 16;
+		BYTE maxTCC = 100, maxOffset = 16;
 		DWORD systemID = 0;
 
 #ifdef _SERVICE_WAY_
@@ -107,7 +107,7 @@ namespace AlienFan_SDK {
 
 		// Set boost value for the fan index fanID at fans[]. If force, raw value set, otherwise cooked by boost.
 		// Result: value or error
-		int SetFanBoost(int fanID, byte value);
+		int SetFanBoost(int fanID, BYTE value);
 
 		// Get temperature value for the sensor index TanID at sensors[]
 		// Result: temperature value or error
@@ -119,7 +119,7 @@ namespace AlienFan_SDK {
 
 		// Set system power profile to power index at powers[]
 		// Result: raw value set or error
-		int SetPower(byte level);
+		int SetPower(BYTE level);
 
 		// Get current system power value index at powers[]
 		// Result: power value index in powers[]
@@ -140,13 +140,13 @@ namespace AlienFan_SDK {
 
 		int GetCharge();
 
-		int SetCharge(byte val);
+		int SetCharge(BYTE val);
 
 		// Fake OC
 		int GetTCC() { return -1; };
-		int SetTCC(byte temp) { return -1; };
+		int SetTCC(BYTE temp) { return -1; };
 		int GetXMP() { return -1; };
-		int SetXMP(byte xmp) { return -1; };
+		int SetXMP(BYTE xmp) { return -1; };
 
 		// Get low-level driver handle for direct operations
 		// Result: handle to driver or NULL
@@ -154,16 +154,16 @@ namespace AlienFan_SDK {
 
 		// Call ACPI system control method with given parameters - see ALIENFAN_DEVICE for details
 		// Result: reply from the driver or error
-		int RunMainCommand(ALIENFAN_COMMAND com, byte value1 = 0, byte value2 = 0);
+		int RunMainCommand(ALIENFAN_COMMAND com, BYTE value1 = 0, BYTE value2 = 0);
 
 		// Call ACPI GPU control method with given parameters - see ALIENFAN_DEVICE for details
 		// Result: reply from the driver or error
 		int RunGPUCommand(short com, DWORD packed);
 
 		// Arrays of sensors, fans, max. boosts and power values detected at Probe()
-		vector<ALIENFAN_SEN_INFO> sensors;
-		vector<ALIENFAN_FAN_INFO> fans;
-		vector<byte> powers;
+		std::vector<ALIENFAN_SEN_INFO> sensors;
+		std::vector<ALIENFAN_FAN_INFO> fans;
+		std::vector<BYTE> powers;
 		HANDLE acc = NULL;
 
 		bool isAlienware = false, isSupported = false, isGmode = false, isCharge = false;
@@ -191,10 +191,10 @@ namespace AlienFan_SDK {
 		bool Update();
 
 		// Set color of lights mask defined by id to RGB
-		bool SetColor(byte mask, byte r, byte g, byte b, bool save = false);
+		bool SetColor(BYTE mask, BYTE r, BYTE g, BYTE b, bool save = false);
 
 		// Set light system mode (brightness, ???)
-		bool SetBrightness(byte mode);
+		bool SetBrightness(BYTE mode);
 
 		//// Return color subsystem availability
 		//bool IsActivated();
