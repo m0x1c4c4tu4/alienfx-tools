@@ -51,14 +51,9 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: Install Windows App SDK
-        run: |
-          nuget install Microsoft.WindowsAppSDK -Version 1.5.240802000 -OutputDirectory packages
-          nuget install Microsoft.Windows.CppWinRT -Version 2.0.240405.15 -OutputDirectory packages
-
       - name: Restore NuGet packages
         run: |
-          nuget restore alienfx-tools.sln -PackagesDirectory packages
+          msbuild alienfx-gui-winui3\alienfx-gui-winui3.vcxproj /t:restore /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /v:minimal
 
       - name: Build WinUI 3 Project
         run: |
