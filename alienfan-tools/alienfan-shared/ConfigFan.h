@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <std::map>
 #include "alienfan-sdk.h"
 
 
@@ -8,36 +8,36 @@
 //DWORD WINAPI DPTFInit(LPVOID lparam);
 
 struct fan_point {
-	byte temp, boost;
+	BYTE temp, boost;
 };
 
 struct sen_block {
 	bool active = true;
-	std::vector<fan_point> points;
+	std::std::vector<fan_point> points;
 };
 
 struct fan_profile {
 	union {
 		struct {
-			byte powerStage;
-			byte powerStageDC;
+			BYTE powerStage;
+			BYTE powerStageDC;
 			WORD gmodeStage;
 		};
 		DWORD powerSet = 0;
 	};
-	map<byte,map<WORD, sen_block>> fanControls;
+	std::map<BYTE,std::map<WORD, sen_block>> fanControls;
 	// OC block
 	union {
 		struct {
-			byte currentTCC;
-			byte memoryXMP;
+			BYTE currentTCC;
+			BYTE memoryXMP;
 		};
 		DWORD ocSettings = 100;
 	};
 };
 
 struct fan_overboost {
-	byte maxBoost;
+	BYTE maxBoost;
 	USHORT maxRPM;
 };
 
@@ -47,7 +47,7 @@ private:
 	void GetReg(const char *name, DWORD *value, DWORD defValue = 0);
 	void SetReg(const char *text, DWORD value);
 public:
-	byte lastSelectedFan = 0;
+	BYTE lastSelectedFan = 0;
 	WORD lastSelectedSensor;
 	DWORD startWithWindows;
 	DWORD startMinimized;
@@ -65,21 +65,21 @@ public:
 	fan_profile prof;
 	fan_profile* lastProf = &prof;
 
-	map<byte, fan_overboost> boosts;
-	map<byte, std::string> powers;
-	map<WORD, std::string> sensors;
+	std::map<BYTE, fan_overboost> boosts;
+	std::map<BYTE, std::std::string> powers;
+	std::map<WORD, std::std::string> sensors;
 
 	void* niData = NULL;
 
 	ConfigFan();
 	~ConfigFan();
 
-	void AddSensorCurve(fan_profile* prof, byte fid, WORD sid, byte* data, DWORD lend);
-	void SaveSensorBlocks(HKEY key, std::string pname, fan_profile* data);
-	std::string* GetPowerName(int index);
-	std::string GetSensorName(AlienFan_SDK::ALIENFAN_SEN_INFO* acpi);
-	void UpdateBoost(byte fanID, byte boost, WORD rpm);
-	int GetFanScale(byte fanID);
+	void AddSensorCurve(fan_profile* prof, BYTE fid, WORD sid, BYTE* data, DWORD lend);
+	void SaveSensorBlocks(HKEY key, std::std::string pname, fan_profile* data);
+	std::std::string* GetPowerName(int index);
+	std::std::string GetSensorName(AlienFan_SDK::ALIENFAN_SEN_INFO* acpi);
+	void UpdateBoost(BYTE fanID, BYTE boost, WORD rpm);
+	int GetFanScale(BYTE fanID);
 	void Load();
 	void Save();
 };
