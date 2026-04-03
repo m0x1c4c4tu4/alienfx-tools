@@ -1,7 +1,7 @@
 #pragma once
 
-#include <std::std::string>
-#include <std::vector>
+#include <string>
+#include <vector>
 #include <wbemidl.h>
 #include <wtypes.h>
 
