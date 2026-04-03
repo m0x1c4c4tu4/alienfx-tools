@@ -83,6 +83,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegHelperLib", "RegHelperLib\RegHelperLib.vcxproj", "{5DCB3394-1906-4FEF-8543-83A3FB8A25F8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alienfx-gui-winui3", "alienfx-gui-winui3\alienfx-gui-winui3.vcxproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+	ProjectSection(ProjectDependencies) = postProject
+		{90879993-7449-4A28-972E-7228D4C4D0A8} = {90879993-7449-4A28-972E-7228D4C4D0A8}
+		{41343B7C-6C9F-4AD4-9D27-050B3D76290D} = {41343B7C-6C9F-4AD4-9D27-050B3D76290D}
+		{3D4EF0C4-282C-4318-8FBB-133514A8F0DC} = {3D4EF0C4-282C-4318-8FBB-133514A8F0DC}
+		{5DCB3394-1906-4FEF-8543-83A3FB8A25F8} = {5DCB3394-1906-4FEF-8543-83A3FB8A25F8}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		alienfan-tools\alienfan-shared\alienfan-shared.vcxitems*{05a1d711-23f5-4b90-9f62-ec3de2419b4d}*SharedItemsImports = 9

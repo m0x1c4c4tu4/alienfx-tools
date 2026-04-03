@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="winrt::AlienFX::Controls::FreqBarsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="{StaticResource AlienSurface}" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1" Padding="16">
+        <StackPanel>
+            <TextBlock Text="Frequency Analysis" Style="{StaticResource SectionHeaderStyle}" />
+            <ItemsRepeater x:Name="BarsRepeater">
+                <ItemsRepeater.Layout>
+                    <StackLayout Orientation="Horizontal" Spacing="2" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="12" Height="{Binding BarHeight}" Background="{Binding BarColor}" CornerRadius="2" VerticalAlignment="Bottom" />
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </StackPanel>
+    </Border>
+</UserControl>

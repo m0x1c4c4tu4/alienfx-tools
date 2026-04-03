@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog x:Class="winrt::AlienFX::Dialogs::WhiteBalanceDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="White Balance"
+    PrimaryButtonText="Apply"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary">
+    <StackPanel Spacing="12" MinWidth="300">
+        <Slider x:Name="RedSlider" Header="Red" Minimum="0" Maximum="255" Value="128" />
+        <Slider x:Name="GreenSlider" Header="Green" Minimum="0" Maximum="255" Value="128" />
+        <Slider x:Name="BlueSlider" Header="Blue" Minimum="0" Maximum="255" Value="128" />
+        <Slider x:Name="BrightnessSlider" Header="Brightness" Minimum="0" Maximum="255" Value="255" />
+        <Border x:Name="ColorPreview" Height="60" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1">
+            <Border.Background>
+                <SolidColorBrush Color="White" />
+            </Border.Background>
+        </Border>
+        <Button Content="Reset" HorizontalAlignment="Left" />
+    </StackPanel>
+</ContentDialog>

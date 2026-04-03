@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::EventsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Event Triggers" Style="{StaticResource PageTitleStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Active Events" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="EventsList" MinHeight="120" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding ColorBrush}" RadiusX="3" RadiusY="3" />
+                                    <TextBlock Text="{Binding SourceName}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding LevelText}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Add Event" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Remove Event" />
+                        <Button Content="↑" />
+                        <Button Content="↓" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Event Settings" Style="{StaticResource SectionHeaderStyle}" />
+                    <ComboBox x:Name="EventSource" Header="Source">
+                        <ComboBoxItem Content="CPU Usage" />
+                        <ComboBoxItem Content="RAM Usage" />
+                        <ComboBoxItem Content="GPU Usage" />
+                        <ComboBoxItem Content="Disk Activity" />
+                        <ComboBoxItem Content="Network Activity" />
+                        <ComboBoxItem Content="Power State" />
+                    </ComboBox>
+                    <Slider x:Name="CutLevel" Header="Trigger Level" Minimum="0" Maximum="100" Value="50" />
+                    <ColorPicker x:Name="EventColor" IsAlphaEnabled="False" />
+                    <CheckBox x:Name="NoEventColor" Content="No Event Color" />
+                    <CheckBox x:Name="EventBackground" Content="Background Mode" />
+                    <CheckBox x:Name="EventPriority" Content="Priority Mode" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

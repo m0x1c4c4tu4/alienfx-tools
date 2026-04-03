@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::LightingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Lighting" Style="{StaticResource PageTitleStyle}" />
+            <Pivot>
+                <PivotItem Header="Colors">
+                    <local:ColorsPage />
+                </PivotItem>
+                <PivotItem Header="Events">
+                    <local:EventsPage />
+                </PivotItem>
+                <PivotItem Header="Ambient">
+                    <local:AmbientPage />
+                </PivotItem>
+                <PivotItem Header="Haptics">
+                    <local:HapticsPage />
+                </PivotItem>
+                <PivotItem Header="Grid">
+                    <local:GridPage />
+                </PivotItem>
+                <PivotItem Header="Devices">
+                    <local:DevicesPage />
+                </PivotItem>
+            </Pivot>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

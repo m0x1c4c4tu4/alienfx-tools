@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::GridPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Grid Effects" Style="{StaticResource PageTitleStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Effect Configuration" Style="{StaticResource SectionHeaderStyle}" />
+                    <ComboBox x:Name="EffectType" Header="Effect Type">
+                        <ComboBoxItem Content="Wave" />
+                        <ComboBoxItem Content="Spiral" />
+                        <ComboBoxItem Content="Rain" />
+                        <ComboBoxItem Content="Fire" />
+                        <ComboBoxItem Content="Water" />
+                        <ComboBoxItem Content="Custom" />
+                    </ComboBox>
+                    <ComboBox x:Name="Trigger" Header="Trigger">
+                        <ComboBoxItem Content="Always Active" />
+                        <ComboBoxItem Content="Key Press" />
+                        <ComboBoxItem Content="Mouse Move" />
+                        <ComboBoxItem Content="System Event" />
+                    </ComboBox>
+                    <Slider x:Name="Speed" Header="Speed" Minimum="0" Maximum="1000" Value="500" />
+                    <Slider x:Name="GridWidth" Header="Width" Minimum="1" Maximum="50" Value="10" />
+                    <Slider x:Name="Tact" Header="Tact" Minimum="0" Maximum="1000" Value="500" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Color Phases" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="GridColors" MinHeight="100" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Rectangle Width="24" Height="24" Fill="{Binding ColorBrush}" RadiusX="4" RadiusY="4" />
+                                    <TextBlock Text="{Binding PhaseName}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Add Color" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Remove Color" />
+                        <Button Content="Clear Grid" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Options" Style="{StaticResource SectionHeaderStyle}" />
+                    <CheckBox x:Name="GridCircle" Content="Circle" />
+                    <CheckBox x:Name="GridRandom" Content="Random" />
+                    <CheckBox x:Name="GridPhase" Content="Phase" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Preview" Style="{StaticResource SectionHeaderStyle}" />
+                    <Border x:Name="GridPreview" Height="200" Background="{StaticResource AlienSurfaceAlt}" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1">
+                        <TextBlock Text="Grid effect preview" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource AlienTextSecondary}" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,1 @@
+namespace AlienFX { runtimeclass AmbientPage : Microsoft.UI.Xaml.Controls.Page { AmbientPage(); } }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="winrt::AlienFX::Controls::LedGridControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="{StaticResource AlienSurface}" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1" Padding="8">
+        <ItemsRepeater x:Name="GridItems">
+            <ItemsRepeater.Layout>
+                <UniformGridLayout MinItemWidth="40" MinItemHeight="40" MinRowSpacing="4" MinColumnSpacing="4" />
+            </ItemsRepeater.Layout>
+            <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <Border x:Name="CellBorder" Background="{Binding CellColor}" CornerRadius="4" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1" Tapped="Cell_Tapped">
+                        <TextBlock Text="{Binding CellLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" Foreground="White" />
+                    </Border>
+                </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+    </Border>
+</UserControl>

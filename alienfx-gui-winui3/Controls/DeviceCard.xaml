@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="winrt::AlienFX::Controls::DeviceCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+        <Expander.Header>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Ellipse x:Name="StatusDot" Width="10" Height="10" Fill="Gray" />
+                <TextBlock x:Name="DeviceName" Text="Unknown Device" VerticalAlignment="Center" />
+                <TextBlock x:Name="VidPid" Text="VID:0000 PID:0000" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Expander.Header>
+        <StackPanel Spacing="8">
+            <TextBlock x:Name="FirmwareVersion" Text="Firmware: Unknown" Foreground="{StaticResource AlienTextSecondary}" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="Detect" Style="{StaticResource AccentButtonStyle}" />
+                <Button Content="Map" />
+                <Button Content="Reset" />
+            </StackPanel>
+        </StackPanel>
+    </Expander>
+</UserControl>

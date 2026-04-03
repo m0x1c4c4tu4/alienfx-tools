@@ -1,0 +1,1 @@
+namespace AlienFX::Dialogs { runtimeclass WhiteBalanceDialog : Microsoft.UI.Xaml.Controls.ContentDialog { WhiteBalanceDialog(); } }

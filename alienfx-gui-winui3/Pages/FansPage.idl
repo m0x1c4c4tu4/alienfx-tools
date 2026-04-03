@@ -1,0 +1,1 @@
+namespace AlienFX { runtimeclass FansPage : Microsoft.UI.Xaml.Controls.Page { FansPage(); } }

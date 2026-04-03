@@ -1,0 +1,1 @@
+namespace AlienFX::Controls { runtimeclass FreqBarsControl : Microsoft.UI.Xaml.Controls.UserControl { FreqBarsControl(); } }

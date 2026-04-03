@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Dashboard" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="System overview and quick actions will appear here."
+                       Foreground="{StaticResource AlienTextSecondary}" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

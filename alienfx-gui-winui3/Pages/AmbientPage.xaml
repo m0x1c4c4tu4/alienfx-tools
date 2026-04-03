@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::AmbientPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Ambient Lighting" Style="{StaticResource PageTitleStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Capture Zones" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="ZonesList" MinHeight="100" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Rectangle Width="24" Height="24" Fill="{Binding ColorBrush}" RadiusX="4" RadiusY="4" />
+                                    <TextBlock Text="{Binding ZoneName}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Add Zone" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Remove Zone" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Capture Settings" Style="{StaticResource SectionHeaderStyle}" />
+                    <Slider x:Name="HScale" Header="Horizontal Scale" Minimum="1" Maximum="100" Value="50" />
+                    <Slider x:Name="VScale" Header="Vertical Scale" Minimum="1" Maximum="100" Value="50" />
+                    <ComboBox x:Name="DisplayFreq" Header="Capture Frequency">
+                        <ComboBoxItem Content="1 Hz" />
+                        <ComboBoxItem Content="5 Hz" />
+                        <ComboBoxItem Content="10 Hz" />
+                        <ComboBoxItem Content="30 Hz" />
+                        <ComboBoxItem Content="60 Hz" />
+                    </ComboBox>
+                    <CheckBox x:Name="SpectrumMode" Content="Spectrum Gradient" />
+                    <CheckBox x:Name="ReverseMode" Content="Reverse" />
+                    <Button x:Name="ResetAmbient" Content="Reset" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Preview" Style="{StaticResource SectionHeaderStyle}" />
+                    <Border x:Name="AmbientPreview" Height="200" Background="{StaticResource AlienSurfaceAlt}" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1">
+                        <TextBlock Text="Ambient capture preview" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource AlienTextSecondary}" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,103 @@
+name: Build WinUI 3
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'alienfx-gui-winui3/**'
+      - 'AlienFX-SDK/**'
+      - 'alienfan-tools/**'
+      - 'Common/**'
+      - 'RegHelperLib/**'
+      - '.github/workflows/build-winui3.yml'
+  pull_request:
+    branches: [master, main]
+    paths:
+      - 'alienfx-gui-winui3/**'
+      - 'AlienFX-SDK/**'
+      - 'alienfan-tools/**'
+      - 'Common/**'
+      - 'RegHelperLib/**'
+  workflow_dispatch:
+    inputs:
+      configuration:
+        description: 'Build configuration'
+        required: true
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
+
+jobs:
+  build:
+    name: Build AlienFX Control WinUI 3
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        configuration: [Release]
+        platform: [x64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Install Windows App SDK
+        run: |
+          nuget install Microsoft.WindowsAppSDK -Version 1.5.240802000 -OutputDirectory packages
+          nuget install Microsoft.Windows.CppWinRT -Version 2.0.240405.15 -OutputDirectory packages
+
+      - name: Restore NuGet packages
+        run: |
+          nuget restore alienfx-tools.sln -PackagesDirectory packages
+
+      - name: Build WinUI 3 Project
+        run: |
+          msbuild alienfx-gui-winui3\alienfx-gui-winui3.vcxproj `
+            /p:Configuration=${{ matrix.configuration }} `
+            /p:Platform=${{ matrix.platform }} `
+            /p:WindowsPackageType=None `
+            /p:WindowsAppSDKSelfContained=true `
+            /p:CppWinRTOptimized=true `
+            /p:CppWinRTUseWinUI3=true `
+            /v:minimal `
+            /m
+
+      - name: Find output executable
+        id: find_exe
+        run: |
+          $exe = Get-ChildItem -Path . -Recurse -Filter "alienfx-gui-winui3.exe" | Select-Object -First 1
+          if ($exe) {
+            echo "path=$($exe.FullName)" >> $env:GITHUB_OUTPUT
+            echo "size=$([math]::Round($exe.Length / 1MB, 2)) MB" >> $env:GITHUB_OUTPUT
+            Write-Host "Found: $($exe.FullName) ($([math]::Round($exe.Length / 1MB, 2)) MB)"
+          } else {
+            Write-Host "WARNING: Executable not found!"
+            Get-ChildItem -Path . -Recurse -Filter "*.exe" | ForEach-Object { Write-Host "  $($_.FullName)" }
+          }
+
+      - name: Upload build artifact
+        if: steps.find_exe.outputs.path != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlienFX-Control-WinUI3-${{ matrix.configuration }}-${{ matrix.platform }}
+          path: ${{ steps.find_exe.outputs.path }}
+          retention-days: 30
+
+      - name: Create Release (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.find_exe.outputs.path }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

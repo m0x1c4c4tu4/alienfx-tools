@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::ColorsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Color Effects" Style="{StaticResource PageTitleStyle}" />
+
+            <!-- Effects List -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Active Effects" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="EffectsList" MinHeight="120" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Rectangle Width="24" Height="24" Fill="{Binding ColorBrush}" RadiusX="4" RadiusY="4" />
+                                    <TextBlock Text="{Binding EffectName}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding EffectType}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Add Effect" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Remove Effect" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Effect Configuration -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Effect Settings" Style="{StaticResource SectionHeaderStyle}" />
+                    <ComboBox x:Name="EffectType" Header="Effect Type" PlaceholderText="Select effect">
+                        <ComboBoxItem Content="Static" />
+                        <ComboBoxItem Content="Pulse" />
+                        <ComboBoxItem Content="Morph" />
+                        <ComboBoxItem Content="Breath" />
+                        <ComboBoxItem Content="Color Cycle" />
+                        <ComboBoxItem Content="Random" />
+                    </ComboBox>
+                    <ComboBox x:Name="ColorMode" Header="Color Mode">
+                        <ComboBoxItem Content="Global" />
+                        <ComboBoxItem Content="Per-Zone" />
+                        <ComboBoxItem Content="Per-Light" />
+                    </ComboBox>
+                    <Slider x:Name="Tempo" Header="Tempo" Minimum="0" Maximum="1000" Value="500" />
+                    <Slider x:Name="Length" Header="Length" Minimum="1" Maximum="100" Value="10" />
+                    <ColorPicker x:Name="ColorPicker" IsAlphaEnabled="False" />
+                    <Button x:Name="TestColor" Content="Test Color" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Border>
+
+            <!-- Flags -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Options" Style="{StaticResource SectionHeaderStyle}" />
+                    <CheckBox x:Name="CircleFlag" Content="Circle" />
+                    <CheckBox x:Name="RandomFlag" Content="Random" />
+                    <CheckBox x:Name="PhaseFlag" Content="Phase" />
+                    <CheckBox x:Name="BackgroundFlag" Content="Background" />
+                    <CheckBox x:Name="ReversePos" Content="Reverse Position" />
+                    <CheckBox x:Name="Spectrum" Content="Spectrum Gradient" />
+                    <CheckBox x:Name="Reverse" Content="Reverse" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

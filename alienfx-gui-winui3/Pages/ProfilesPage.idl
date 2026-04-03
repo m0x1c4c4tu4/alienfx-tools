@@ -1,0 +1,1 @@
+namespace AlienFX { runtimeclass ProfilesPage : Microsoft.UI.Xaml.Controls.Page { ProfilesPage(); } }

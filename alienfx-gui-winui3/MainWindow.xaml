@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="winrt::AlienFX::MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AlienFX Control">
+    <Grid>
+        <NavigationView
+            x:Name="NavView"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            PaneDisplayMode="Left"
+            SelectionChanged="NavView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Dashboard" Tag="dashboard">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE80F;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItemSeparator />
+
+                <NavigationViewItem Content="Lighting" Tag="lighting" IsExpanded="True">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE793;" />
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="Colors" Tag="colors">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE790;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Events" Tag="events">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE916;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Ambient" Tag="ambient">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE737;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Haptics" Tag="haptics">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE768;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Grid" Tag="grid">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE73D;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Devices" Tag="devices">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE772;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Fans" Tag="fans">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE736;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Profiles" Tag="profiles">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8A5;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Settings" Tag="settings">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="About" Tag="about">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE946;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
+            <Frame x:Name="ContentFrame" Padding="24" />
+        </NavigationView>
+    </Grid>
+</Window>

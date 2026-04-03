@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog x:Class="winrt::AlienFX::Dialogs::KeyPressDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Capture Hotkey"
+    PrimaryButtonText="OK"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary">
+    <StackPanel Spacing="12" MinWidth="300">
+        <TextBlock Text="Press the key combination you want to use:" />
+        <Border x:Name="KeyCaptureArea" Height="80" Background="{StaticResource AlienSurfaceAlt}" CornerRadius="8" BorderBrush="{StaticResource AlienBorder}" BorderThickness="1" KeyDown="KeyCaptureArea_KeyDown">
+            <TextBlock x:Name="CapturedKeyText" Text="Press keys..." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource AlienTextSecondary}" FontSize="18" />
+        </Border>
+        <TextBlock x:Name="ScanCodeText" Foreground="{StaticResource AlienTextSecondary}" FontSize="12" />
+    </StackPanel>
+</ContentDialog>

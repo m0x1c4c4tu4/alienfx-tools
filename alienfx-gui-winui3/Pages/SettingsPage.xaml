@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Settings" Style="{StaticResource PageTitleStyle}" />
+            <Expander Header="Startup" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <CheckBox x:Name="StartWithWindows" Content="Start with Windows" />
+                    <CheckBox x:Name="StartMinimized" Content="Start Minimized" />
+                </StackPanel>
+            </Expander>
+            <Expander Header="Power &amp; Dimming" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <Slider x:Name="DimmingPower" Header="Dimming Power" Minimum="0" Maximum="100" Value="50" />
+                    <CheckBox x:Name="PowerDim" Content="Dim Power Button" />
+                    <CheckBox x:Name="OffPowerButton" Content="Off Power Button LED" />
+                    <CheckBox x:Name="ScreenOff" Content="Off When Screen Off" />
+                    <CheckBox x:Name="BatDim" Content="Dim on Battery" />
+                    <CheckBox x:Name="OffOnBattery" Content="Off on Battery" />
+                </StackPanel>
+            </Expander>
+            <Expander Header="Effects" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <CheckBox x:Name="EnableEffects" Content="Enable Effects" />
+                    <CheckBox x:Name="LightsOn" Content="Lights On" />
+                    <CheckBox x:Name="GammaCorrection" Content="Gamma Correction" />
+                    <CheckBox x:Name="EffectsOnBattery" Content="Effects on Battery" />
+                    <Slider x:Name="PollingRate" Header="Polling Rate (ms)" Minimum="10" Maximum="1000" Value="100" />
+                </StackPanel>
+            </Expander>
+            <Expander Header="Hardware" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <CheckBox x:Name="FanControl" Content="Fan Control" />
+                    <CheckBox x:Name="DisableAWCC" Content="Disable AWCC" />
+                    <CheckBox x:Name="ESIFTemp" Content="ESIF Temperature" />
+                    <CheckBox x:Name="KeepSystem" Content="Keep System Awake" />
+                    <CheckBox x:Name="BatFan" Content="Fans on Battery" />
+                    <CheckBox x:Name="DiskSensors" Content="Disk Sensors" />
+                    <CheckBox x:Name="OverclockEnable" Content="Overclock Enable" />
+                    <CheckBox x:Name="NumlockActive" Content="Numlock Active" />
+                    <CheckBox x:Name="ActionLights" Content="Action Lights" />
+                    <CheckBox x:Name="PowerButton" Content="Is Power Button" />
+                    <CheckBox x:Name="Indicator" Content="Indicator" />
+                    <CheckBox x:Name="NoDesktop" Content="No Desktop Exception" />
+                    <CheckBox x:Name="ResetOnWake" Content="Reset on Wake" />
+                </StackPanel>
+            </Expander>
+            <Expander Header="Hotkeys" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Configure hotkeys for profile switching and actions" Foreground="{StaticResource AlienTextSecondary}" />
+                    <Button Content="Configure Hotkeys" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Expander>
+            <Expander Header="Update" IsExpanded="True">
+                <StackPanel Spacing="8">
+                    <CheckBox x:Name="UpdateCheck" Content="Check for Updates" />
+                    <Button Content="Check Now" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

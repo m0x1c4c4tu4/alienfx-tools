@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup Label="Globals">
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <CppWinRTUseWinUI3>true</CppWinRTUseWinUI3>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <ProjectName>alienfx-gui-winui3</ProjectName>
+    <RootNamespace>AlienFX</RootNamespace>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\Common;$(ProjectDir)..\AlienFX-SDK\AlienFX_SDK;$(ProjectDir)..\alienfan-tools\alienfan-SDK;$(ProjectDir)..\RegHelperLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>alienfx-gui-winui3.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240802000" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.240405.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="MainWindow.xaml.h" />
+    <ClInclude Include="ViewModel\ViewModelBase.h" />
+    <ClInclude Include="ViewModel\MainViewModel.h" />
+    <ClInclude Include="ViewModel\Models.h" />
+    <ClInclude Include="ViewModel\LightingViewModel.h" />
+    <ClInclude Include="ViewModel\ColorsViewModel.h" />
+    <ClInclude Include="ViewModel\AllViewModels.h" />
+    <ClInclude Include="Helpers\HardwareBridge.h" />
+    <ClInclude Include="Helpers\ConfigBridge.h" />
+    <ClInclude Include="Helpers\DispatcherHelper.h" />
+    <ClInclude Include="Helpers\SystemTray.h" />
+    <ClInclude Include="Converters\ColorToBrushConverter.h" />
+    <ClInclude Include="Converters\BoolToVisibilityConverter.h" />
+    <ClInclude Include="Controls\ColorButton.xaml.h" />
+    <ClInclude Include="Controls\LedGridControl.xaml.h" />
+    <ClInclude Include="Controls\FanCurveControl.xaml.h" />
+    <ClInclude Include="Controls\GaugeControl.xaml.h" />
+    <ClInclude Include="Controls\FreqBarsControl.xaml.h" />
+    <ClInclude Include="Controls\DeviceCard.xaml.h" />
+    <ClInclude Include="Dialogs\ZoneSelectDialog.xaml.h" />
+    <ClInclude Include="Dialogs\KeyPressDialog.xaml.h" />
+    <ClInclude Include="Dialogs\WhiteBalanceDialog.xaml.h" />
+    <ClInclude Include="Pages\DashboardPage.xaml.h" />
+    <ClInclude Include="Pages\LightingPage.xaml.h" />
+    <ClInclude Include="Pages\ColorsPage.xaml.h" />
+    <ClInclude Include="Pages\EventsPage.xaml.h" />
+    <ClInclude Include="Pages\AmbientPage.xaml.h" />
+    <ClInclude Include="Pages\HapticsPage.xaml.h" />
+    <ClInclude Include="Pages\GridPage.xaml.h" />
+    <ClInclude Include="Pages\DevicesPage.xaml.h" />
+    <ClInclude Include="Pages\FansPage.xaml.h" />
+    <ClInclude Include="Pages\ProfilesPage.xaml.h" />
+    <ClInclude Include="Pages\SettingsPage.xaml.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp">
+      <DependentUpon>App.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="MainWindow.xaml.cpp">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="ViewModel\MainViewModel.cpp" />
+    <ClCompile Include="ViewModel\LightingViewModel.cpp" />
+    <ClCompile Include="ViewModel\ColorsViewModel.cpp" />
+    <ClCompile Include="ViewModel\AllViewModels.cpp" />
+    <ClCompile Include="Helpers\HardwareBridge.cpp" />
+    <ClCompile Include="Helpers\ConfigBridge.cpp" />
+    <ClCompile Include="Helpers\DispatcherHelper.cpp" />
+    <ClCompile Include="Helpers\SystemTray.cpp" />
+    <ClCompile Include="Converters\ColorToBrushConverter.cpp" />
+    <ClCompile Include="Converters\BoolToVisibilityConverter.cpp" />
+    <ClCompile Include="Controls\ColorButton.xaml.cpp">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Controls\LedGridControl.xaml.cpp">
+      <DependentUpon>LedGridControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Controls\FanCurveControl.xaml.cpp">
+      <DependentUpon>FanCurveControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Controls\GaugeControl.xaml.cpp">
+      <DependentUpon>GaugeControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Controls\FreqBarsControl.xaml.cpp">
+      <DependentUpon>FreqBarsControl.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Controls\DeviceCard.xaml.cpp">
+      <DependentUpon>DeviceCard.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Dialogs\ZoneSelectDialog.xaml.cpp">
+      <DependentUpon>ZoneSelectDialog.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Dialogs\KeyPressDialog.xaml.cpp">
+      <DependentUpon>KeyPressDialog.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Dialogs\WhiteBalanceDialog.xaml.cpp">
+      <DependentUpon>WhiteBalanceDialog.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\DashboardPage.xaml.cpp">
+      <DependentUpon>DashboardPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\LightingPage.xaml.cpp">
+      <DependentUpon>LightingPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\ColorsPage.xaml.cpp">
+      <DependentUpon>ColorsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\EventsPage.xaml.cpp">
+      <DependentUpon>EventsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\AmbientPage.xaml.cpp">
+      <DependentUpon>AmbientPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\HapticsPage.xaml.cpp">
+      <DependentUpon>HapticsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\GridPage.xaml.cpp">
+      <DependentUpon>GridPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\DevicesPage.xaml.cpp">
+      <DependentUpon>DevicesPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\FansPage.xaml.cpp">
+      <DependentUpon>FansPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\ProfilesPage.xaml.cpp">
+      <DependentUpon>ProfilesPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Pages\SettingsPage.xaml.cpp">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="pch.h">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorButton.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Controls\LedGridControl.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Controls\FanCurveControl.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Controls\GaugeControl.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Controls\FreqBarsControl.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Controls\DeviceCard.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Dialogs\ZoneSelectDialog.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Dialogs\KeyPressDialog.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Dialogs\WhiteBalanceDialog.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\DashboardPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\LightingPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\ColorsPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\EventsPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\AmbientPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\HapticsPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\GridPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\DevicesPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\FansPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\ProfilesPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Pages\SettingsPage.xaml"><SubType>Designer</SubType></Page>
+    <Page Include="Resources\Colors.xaml" />
+    <Page Include="Resources\Styles.xaml" />
+    <Page Include="Resources\Templates.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Manifest Include="app.manifest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Midl Include="App.idl" />
+    <Midl Include="MainWindow.idl" />
+    <Midl Include="Controls\ColorButton.idl" />
+    <Midl Include="Controls\LedGridControl.idl" />
+    <Midl Include="Controls\FanCurveControl.idl" />
+    <Midl Include="Controls\GaugeControl.idl" />
+    <Midl Include="Controls\FreqBarsControl.idl" />
+    <Midl Include="Controls\DeviceCard.idl" />
+    <Midl Include="Dialogs\ZoneSelectDialog.idl" />
+    <Midl Include="Dialogs\KeyPressDialog.idl" />
+    <Midl Include="Dialogs\WhiteBalanceDialog.idl" />
+    <Midl Include="Pages\DashboardPage.idl" />
+    <Midl Include="Pages\LightingPage.idl" />
+    <Midl Include="Pages\ColorsPage.idl" />
+    <Midl Include="Pages\EventsPage.idl" />
+    <Midl Include="Pages\AmbientPage.idl" />
+    <Midl Include="Pages\HapticsPage.idl" />
+    <Midl Include="Pages\GridPage.idl" />
+    <Midl Include="Pages\DevicesPage.idl" />
+    <Midl Include="Pages\FansPage.idl" />
+    <Midl Include="Pages\ProfilesPage.idl" />
+    <Midl Include="Pages\SettingsPage.idl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Image Include="Assets\Logo.png" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT\build\native\Microsoft.Windows.CppWinRT.targets')" />
+  </ImportGroup>
+</Project>

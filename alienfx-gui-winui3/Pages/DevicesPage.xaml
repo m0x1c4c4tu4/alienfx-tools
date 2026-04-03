@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="winrt::AlienFX::DevicesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <TextBlock Text="Devices" Style="{StaticResource PageTitleStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Detected Devices" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="DevicesList" MinHeight="100" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Ellipse Width="12" Height="12" Fill="{Binding StatusColor}" />
+                                    <TextBlock Text="{Binding DeviceName}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding VidPid}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Detect" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Load Map" />
+                        <Button Content="Save Map" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Zones" Style="{StaticResource SectionHeaderStyle}" />
+                    <ListView x:Name="ZonesList" MinHeight="80" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock Text="{Binding ZoneName}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding LightCount}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Add Zone" Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="Delete Zone" />
+                        <Button Content="Select From List" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Light Configuration" Style="{StaticResource SectionHeaderStyle}" />
+                    <TextBox x:Name="LightName" Header="Light Name" PlaceholderText="Enter light name" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="White Balance" />
+                        <Button Content="Clear Light" />
+                    </StackPanel>
+                    <CheckBox x:Name="ShowGridNames" Content="Show Grid Names" />
+                    <TextBlock x:Name="DeviceInfo" Foreground="{StaticResource AlienTextSecondary}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

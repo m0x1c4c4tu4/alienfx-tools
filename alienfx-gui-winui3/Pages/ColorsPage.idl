@@ -1,0 +1,1 @@
+namespace AlienFX { runtimeclass ColorsPage : Microsoft.UI.Xaml.Controls.Page { ColorsPage(); } }
