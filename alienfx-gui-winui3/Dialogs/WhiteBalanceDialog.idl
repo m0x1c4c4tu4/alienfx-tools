@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Dialogs { runtimeclass WhiteBalanceDialog : Microsoft.UI.Xaml.Controls.ContentDialog { WhiteBalanceDialog(); } } }
+namespace AlienFX { namespace Dialogs { [default_interface] runtimeclass WhiteBalanceDialog : Microsoft.UI.Xaml.Controls.ContentDialog { WhiteBalanceDialog(); } } }

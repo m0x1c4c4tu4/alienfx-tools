@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Controls { runtimeclass LedGridControl : Microsoft.UI.Xaml.Controls.UserControl { LedGridControl(); } } }
+namespace AlienFX { namespace Controls { [default_interface] runtimeclass LedGridControl : Microsoft.UI.Xaml.Controls.UserControl { LedGridControl(); } } }

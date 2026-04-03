@@ -1,1 +1,1 @@
-namespace AlienFX { runtimeclass DashboardPage : Microsoft.UI.Xaml.Controls.Page { DashboardPage(); } }
+namespace AlienFX { [default_interface] runtimeclass DashboardPage : Microsoft.UI.Xaml.Controls.Page { DashboardPage(); } }

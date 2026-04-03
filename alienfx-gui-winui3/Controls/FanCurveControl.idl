@@ -1,1 +1,1 @@
-namespace AlienFX { namespace Controls { runtimeclass FanCurveControl : Microsoft.UI.Xaml.Controls.UserControl { FanCurveControl(); } } }
+namespace AlienFX { namespace Controls { [default_interface] runtimeclass FanCurveControl : Microsoft.UI.Xaml.Controls.UserControl { FanCurveControl(); } } }
