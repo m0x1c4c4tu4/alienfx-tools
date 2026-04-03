@@ -66,7 +66,7 @@ CaptureHelper::CaptureHelper(bool needLights)
 		try {
 			dxgi_manager = new DXGIManager();
 		}
-		catch (exception e) {
+		catch (const exception& e) {
 			// No DirectX or GPU
 			delete dxgi_manager;
 			dxgi_manager = NULL;

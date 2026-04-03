@@ -121,7 +121,9 @@ void ResetDPIScale(LPWSTR cmdLine) {
 		RegCloseKey(dpiKey);
 	}
 	if (wcslen(cmdLine)) {
-		Sleep(_wtoi(cmdLine) * 1000);
+		long delaySec = _wtol(cmdLine);
+		if (delaySec > 0 && delaySec < 86400) // clamp to 0..24h
+			Sleep((DWORD)delaySec * 1000);
 	}
 }
 
