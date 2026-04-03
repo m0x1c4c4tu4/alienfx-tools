@@ -1,1 +1,1 @@
-namespace AlienFX::Controls { runtimeclass FanCurveControl { FanCurveControl(); } }
+namespace AlienFX { namespace Controls { runtimeclass FanCurveControl { FanCurveControl(); } } }

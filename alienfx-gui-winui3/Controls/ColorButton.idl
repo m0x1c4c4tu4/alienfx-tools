@@ -1,1 +1,1 @@
-namespace AlienFX::Controls { runtimeclass ColorButton { ColorButton(); } }
+namespace AlienFX { namespace Controls { runtimeclass ColorButton { ColorButton(); } } }

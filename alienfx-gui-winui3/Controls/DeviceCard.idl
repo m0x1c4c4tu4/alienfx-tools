@@ -1,1 +1,1 @@
-namespace AlienFX::Controls { runtimeclass DeviceCard { DeviceCard(); } }
+namespace AlienFX { namespace Controls { runtimeclass DeviceCard { DeviceCard(); } } }
