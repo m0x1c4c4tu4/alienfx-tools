@@ -1,1 +1,1 @@
-namespace AlienFX { runtimeclass LightingPage { LightingPage(); } }
+namespace AlienFX { runtimeclass LightingPage : Microsoft.UI.Xaml.Controls.Page { LightingPage(); } }

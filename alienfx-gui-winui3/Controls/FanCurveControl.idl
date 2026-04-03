@@ -1,1 +1,1 @@
-namespace AlienFX.Controls { runtimeclass FanCurveControl { FanCurveControl(); } }
+namespace AlienFX.Controls { runtimeclass FanCurveControl : Microsoft.UI.Xaml.Controls.UserControl { FanCurveControl(); } }

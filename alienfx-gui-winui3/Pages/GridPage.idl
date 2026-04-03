@@ -1,1 +1,1 @@
-namespace AlienFX { runtimeclass GridPage { GridPage(); } }
+namespace AlienFX { runtimeclass GridPage : Microsoft.UI.Xaml.Controls.Page { GridPage(); } }
