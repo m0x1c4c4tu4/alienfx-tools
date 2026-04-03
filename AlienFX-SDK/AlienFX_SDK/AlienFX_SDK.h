@@ -1,7 +1,7 @@
 #pragma once
 #include <wtypes.h>
-#include <std::vector>
-#include <std::string>
+#include <vector>
+#include <string>
 
 #ifndef NOACPILIGHTS
 #include "alienfan-SDK.h"

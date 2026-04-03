@@ -74,7 +74,7 @@ namespace AlienFan_SDK {
 			ULONG uNumOfInstances;
 			LPCWSTR instansePath = L"__Path", valuePath = L"Temperature";
 			VARIANT cTemp{ VT_I4 }, instPath{ VT_BSTR };
-			string name;
+			std::string name;
 
 			switch (type) {
 			case 0:
@@ -113,7 +113,7 @@ namespace AlienFan_SDK {
 						spInstance[ind]->Get(valuePath, 0, &cTemp, 0, 0);
 						spInstance[ind]->Release();
 						if (type == 2 || cTemp.intVal > 0 || cTemp.fltVal > 0)
-							sensors.push_back({ { senID++,type }, name + (type != 4 ? to_string(senID) : ""), instPath.bstrVal, (BSTR)valuePath });
+							sensors.push_back({ { senID++,type }, name + (type != 4 ? std::to_string(senID) : ""), instPath.bstrVal, (BSTR)valuePath });
 					}
 				}
 			}
@@ -183,7 +183,7 @@ namespace AlienFan_SDK {
 #ifdef _TRACE_
 									printf("Sensor ID=%x found\n", funcID);
 #endif
-									sensors.push_back({ { vkind, 1 }, sensors.size() < 3 ? temp_names[sensors.size()] : "Sensor #" + to_string(sensors.size()) });
+									sensors.push_back({ { vkind, 1 }, sensors.size() < 3 ? temp_names[sensors.size()] : "Sensor #" + std::to_string(sensors.size()) });
 								}
 								else {
 									if (funcID > 0x8f) {
