@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page x:Class="winrt::AlienFX::EventsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:AlienFX.ViewModel"
+    xmlns:converters="using:AlienFX.Converters">
+    <Page.DataContext>
+        <vm:EventsViewModel />
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrush" />
+    </Page.Resources>
     <ScrollViewer>
         <StackPanel Spacing="16">
             <TextBlock Text="Event Triggers" Style="{StaticResource PageTitleStyle}" />
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Active Events" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="EventsList" MinHeight="120" SelectionMode="Single">
+                    <ListView x:Name="EventsList" MinHeight="120" SelectionMode="Single"
+                              ItemsSource="{Binding Events}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding ColorBrush}" RadiusX="3" RadiusY="3" />
-                                    <TextBlock Text="{Binding SourceName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding LevelText}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Color, Converter={StaticResource ColorToBrush}}" RadiusX="3" RadiusY="3" />
+                                    <TextBlock Text="{Binding Source}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Level}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Add Event" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Remove Event" />
-                        <Button Content="↑" />
-                        <Button Content="↓" />
+                        <Button Content="Add Event" Style="{StaticResource AccentButtonStyle}" Click="AddEventBtn_Click" />
+                        <Button Content="Remove Event" Click="RemoveEventBtn_Click" />
+                        <Button Content="↑" Click="MoveUpBtn_Click" />
+                        <Button Content="↓" Click="MoveDownBtn_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Event Settings" Style="{StaticResource SectionHeaderStyle}" />
-                    <ComboBox x:Name="EventSource" Header="Source">
+                    <ComboBox x:Name="EventSource" Header="Source" SelectedIndex="{Binding EventSource, Mode=TwoWay}">
                         <ComboBoxItem Content="CPU Usage" />
                         <ComboBoxItem Content="RAM Usage" />
                         <ComboBoxItem Content="GPU Usage" />
@@ -38,11 +47,11 @@
                         <ComboBoxItem Content="Network Activity" />
                         <ComboBoxItem Content="Power State" />
                     </ComboBox>
-                    <Slider x:Name="CutLevel" Header="Trigger Level" Minimum="0" Maximum="100" Value="50" />
-                    <ColorPicker x:Name="EventColor" IsAlphaEnabled="False" />
-                    <CheckBox x:Name="NoEventColor" Content="No Event Color" />
-                    <CheckBox x:Name="EventBackground" Content="Background Mode" />
-                    <CheckBox x:Name="EventPriority" Content="Priority Mode" />
+                    <Slider x:Name="CutLevel" Header="Trigger Level" Minimum="0" Maximum="100" Value="{Binding CutLevel, Mode=TwoWay}" />
+                    <ColorPicker x:Name="EventColor" IsAlphaEnabled="False" Color="{Binding SelectedColor, Mode=TwoWay}" />
+                    <CheckBox x:Name="NoEventColor" Content="No Event Color" IsChecked="{Binding NoEventColor, Mode=TwoWay}" />
+                    <CheckBox x:Name="EventBackground" Content="Background Mode" IsChecked="{Binding EventBackground, Mode=TwoWay}" />
+                    <CheckBox x:Name="EventPriority" Content="Priority Mode" IsChecked="{Binding EventPriority, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
         </StackPanel>

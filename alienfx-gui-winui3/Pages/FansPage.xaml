@@ -8,7 +8,8 @@
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Power Mode" Style="{StaticResource SectionHeaderStyle}" />
-                    <ComboBox x:Name="PowerMode" Header="Active Profile">
+                    <ComboBox x:Name="PowerMode" Header="Active Profile"
+                              SelectedIndex="{Binding PowerMode, Mode=TwoWay}">
                         <ComboBoxItem Content="Balanced" />
                         <ComboBoxItem Content="Performance" />
                         <ComboBoxItem Content="Ultra Performance" />
@@ -16,12 +17,14 @@
                         <ComboBoxItem Content="Custom" />
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <ComboBox x:Name="ACBoost" Header="AC Boost">
+                        <ComboBox x:Name="ACBoost" Header="AC Boost"
+                                  SelectedIndex="{Binding ACBoost, Mode=TwoWay}">
                             <ComboBoxItem Content="Default" />
                             <ComboBoxItem Content="Level 1" />
                             <ComboBoxItem Content="Level 2" />
                         </ComboBox>
-                        <ComboBox x:Name="DCBoost" Header="DC Boost">
+                        <ComboBox x:Name="DCBoost" Header="DC Boost"
+                                  SelectedIndex="{Binding DCBoost, Mode=TwoWay}">
                             <ComboBoxItem Content="Default" />
                             <ComboBoxItem Content="Level 1" />
                             <ComboBoxItem Content="Level 2" />
@@ -36,30 +39,35 @@
                         <TextBlock Text="Fan curve visualization" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource AlienTextSecondary}" />
                     </Border>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Apply Curve" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Reset" />
+                        <Button Content="Apply Curve" Style="{StaticResource AccentButtonStyle}"
+                                Click="ApplyCurve_Click" />
+                        <Button Content="Reset"
+                                Click="ResetCurve_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Temperature &amp; Fans" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="TempList" MinHeight="80" Header="Temperatures">
+                    <ListView x:Name="TempList" MinHeight="80" Header="Temperatures"
+                              ItemsSource="{Binding Sensors}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock Text="{Binding SensorName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding ValueText}" Foreground="{StaticResource AlienAccent}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Value}" Foreground="{StaticResource AlienAccent}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Unit}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <ListView x:Name="FanList" MinHeight="80" Header="Fans">
+                    <ListView x:Name="FanList" MinHeight="80" Header="Fans"
+                              ItemsSource="{Binding Fans}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock Text="{Binding FanName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding SpeedText}" Foreground="{StaticResource AlienAccent}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Speed}" Foreground="{StaticResource AlienAccent}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -69,10 +77,14 @@
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Overboost" Style="{StaticResource SectionHeaderStyle}" />
-                    <Slider x:Name="TCC" Header="TCC" Minimum="0" Maximum="100" Value="50" />
-                    <Slider x:Name="XMP" Header="XMP" Minimum="0" Maximum="100" Value="50" />
-                    <Button x:Name="Overboost" Content="Enable Overboost" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Left" />
-                    <Button x:Name="ResetBoost" Content="Reset Boost" HorizontalAlignment="Left" />
+                    <Slider x:Name="TCC" Header="TCC" Minimum="0" Maximum="100"
+                            Value="{Binding TCC, Mode=TwoWay}" />
+                    <Slider x:Name="XMP" Header="XMP" Minimum="0" Maximum="100"
+                            Value="{Binding XMP, Mode=TwoWay}" />
+                    <Button x:Name="Overboost" Content="Enable Overboost" Style="{StaticResource AccentButtonStyle}"
+                            HorizontalAlignment="Left" Click="EnableOverboost_Click" />
+                    <Button x:Name="ResetBoost" Content="Reset Boost" HorizontalAlignment="Left"
+                            Click="ResetBoost_Click" />
                 </StackPanel>
             </Border>
         </StackPanel>

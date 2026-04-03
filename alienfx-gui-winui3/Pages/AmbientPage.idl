@@ -4,5 +4,8 @@ namespace AlienFX
     runtimeclass AmbientPage : Microsoft.UI.Xaml.Controls.Page
     {
         AmbientPage();
+        void AddZone_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void RemoveZone_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void ResetAmbient_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
     }
 }

@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page x:Class="winrt::AlienFX::GridPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:AlienFX.ViewModel"
+    xmlns:converters="using:AlienFX.Converters">
+    <Page.DataContext>
+        <vm:GridViewModel />
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrush" />
+    </Page.Resources>
     <ScrollViewer>
         <StackPanel Spacing="16">
             <TextBlock Text="Grid Effects" Style="{StaticResource PageTitleStyle}" />
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Effect Configuration" Style="{StaticResource SectionHeaderStyle}" />
-                    <ComboBox x:Name="EffectType" Header="Effect Type">
+                    <ComboBox x:Name="EffectType" Header="Effect Type" SelectedIndex="{Binding EffectType, Mode=TwoWay}">
                         <ComboBoxItem Content="Wave" />
                         <ComboBoxItem Content="Spiral" />
                         <ComboBoxItem Content="Rain" />
@@ -16,43 +24,44 @@
                         <ComboBoxItem Content="Water" />
                         <ComboBoxItem Content="Custom" />
                     </ComboBox>
-                    <ComboBox x:Name="Trigger" Header="Trigger">
+                    <ComboBox x:Name="Trigger" Header="Trigger" SelectedIndex="{Binding Trigger, Mode=TwoWay}">
                         <ComboBoxItem Content="Always Active" />
                         <ComboBoxItem Content="Key Press" />
                         <ComboBoxItem Content="Mouse Move" />
                         <ComboBoxItem Content="System Event" />
                     </ComboBox>
-                    <Slider x:Name="Speed" Header="Speed" Minimum="0" Maximum="1000" Value="500" />
-                    <Slider x:Name="GridWidth" Header="Width" Minimum="1" Maximum="50" Value="10" />
-                    <Slider x:Name="Tact" Header="Tact" Minimum="0" Maximum="1000" Value="500" />
+                    <Slider x:Name="Speed" Header="Speed" Minimum="0" Maximum="1000" Value="{Binding Speed, Mode=TwoWay}" />
+                    <Slider x:Name="GridWidth" Header="Width" Minimum="1" Maximum="50" Value="{Binding Width, Mode=TwoWay}" />
+                    <Slider x:Name="Tact" Header="Tact" Minimum="0" Maximum="1000" Value="{Binding Tact, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Color Phases" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="GridColors" MinHeight="100" SelectionMode="Single">
+                    <ListView x:Name="GridColors" MinHeight="100" SelectionMode="Single"
+                              ItemsSource="{Binding Colors}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <Rectangle Width="24" Height="24" Fill="{Binding ColorBrush}" RadiusX="4" RadiusY="4" />
-                                    <TextBlock Text="{Binding PhaseName}" VerticalAlignment="Center" />
+                                    <Rectangle Width="24" Height="24" Fill="{Binding Color, Converter={StaticResource ColorToBrush}}" RadiusX="4" RadiusY="4" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Add Color" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Remove Color" />
-                        <Button Content="Clear Grid" />
+                        <Button Content="Add Color" Style="{StaticResource AccentButtonStyle}" Click="AddColorBtn_Click" />
+                        <Button Content="Remove Color" Click="RemoveColorBtn_Click" />
+                        <Button Content="Clear Grid" Click="ClearGridBtn_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="8">
                     <TextBlock Text="Options" Style="{StaticResource SectionHeaderStyle}" />
-                    <CheckBox x:Name="GridCircle" Content="Circle" />
-                    <CheckBox x:Name="GridRandom" Content="Random" />
-                    <CheckBox x:Name="GridPhase" Content="Phase" />
+                    <CheckBox x:Name="GridCircle" Content="Circle" IsChecked="{Binding Circle, Mode=TwoWay}" />
+                    <CheckBox x:Name="GridRandom" Content="Random" IsChecked="{Binding Random, Mode=TwoWay}" />
+                    <CheckBox x:Name="GridPhase" Content="Phase" IsChecked="{Binding Phase, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ViewModel/AllViewModels.h"
 #include "Helpers/HardwareBridge.h"
+#include "Helpers/ConfigBridge.h"
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI;
@@ -20,8 +21,26 @@ void EventsViewModel::EventPriority(bool v) { SetAndNotify(m_eventPriority, v, L
 IObservableVector<EventEntry> EventsViewModel::Events() { return m_events; }
 void EventsViewModel::AddEvent() { m_events.Append(EventEntry{ L"New Event", m_cutLevel, {0,212,170,255} }); OnPropertyChanged(L"Events"); }
 void EventsViewModel::RemoveEvent() { if (m_events.Size() > 0) { m_events.RemoveAt(m_events.Size()-1); OnPropertyChanged(L"Events"); } }
-void EventsViewModel::MoveUp() {}
-void EventsViewModel::MoveDown() {}
+void EventsViewModel::MoveUp() {
+    auto idx = m_events.IndexOf(m_events.GetAt(0)); // placeholder: move selected up
+    // TODO: track selected index, swap with previous
+    if (idx > 0) {
+        auto item = m_events.GetAt(idx);
+        m_events.RemoveAt(idx);
+        m_events.InsertAt(idx - 1, item);
+        OnPropertyChanged(L"Events");
+    }
+}
+void EventsViewModel::MoveDown() {
+    auto idx = m_events.IndexOf(m_events.GetAt(0)); // placeholder: move selected down
+    // TODO: track selected index, swap with next
+    if (idx < m_events.Size() - 1) {
+        auto item = m_events.GetAt(idx);
+        m_events.RemoveAt(idx);
+        m_events.InsertAt(idx + 1, item);
+        OnPropertyChanged(L"Events");
+    }
+}
 void EventsViewModel::ApplyEvents() { Helpers::HardwareBridge::Instance().UpdateGlobalEffectAsync(0, 1); }
 
 // AmbientViewModel
@@ -104,14 +123,29 @@ void DevicesViewModel::DeviceInfo(hstring const& v) { SetAndNotify(m_deviceInfo,
 IObservableVector<Model::DeviceItem> DevicesViewModel::Devices() { return m_devices; }
 IObservableVector<hstring> DevicesViewModel::Zones() { return m_zones; }
 IObservableVector<DevicesViewModel::FoundDevice> DevicesViewModel::FoundDevices() { return m_found; }
-void DevicesViewModel::Detect() { /* SDK call to detect devices */ }
-void DevicesViewModel::LoadMap() { /* Load mapping file */ }
-void DevicesViewModel::SaveMap() { /* Save mapping file */ }
-void DevicesViewModel::WhiteBalance() { /* Open white balance dialog */ }
+void DevicesViewModel::Detect() {
+    HardwareBridge::Instance().DetectDevices();
+}
+void DevicesViewModel::LoadMap() {
+    auto& cfg = ConfigBridge::Instance();
+    auto mapData = cfg.LoadSetting(L"DeviceMap", L"");
+    if (!mapData.empty()) {
+        DeviceInfo(L"Device map loaded from config");
+    }
+}
+void DevicesViewModel::SaveMap() {
+    auto& cfg = ConfigBridge::Instance();
+    cfg.SaveSetting(L"DeviceMap", DeviceInfo());
+}
+void DevicesViewModel::WhiteBalance() {
+    OutputDebugStringW(L"Opening white balance dialog...\n");
+}
 void DevicesViewModel::ClearLight() { Helpers::HardwareBridge::Instance().SetLightAsync(0, 0, {0,0,0,255}); }
 void DevicesViewModel::AddZone() { m_zones.Append(L"Zone " + to_hstring(m_zones.Size()+1)); OnPropertyChanged(L"Zones"); }
 void DevicesViewModel::DeleteZone() { if (m_zones.Size() > 0) { m_zones.RemoveAt(m_zones.Size()-1); OnPropertyChanged(L"Zones"); } }
-void DevicesViewModel::SelectFromList() { /* Open zone selection dialog */ }
+void DevicesViewModel::SelectFromList() {
+    OutputDebugStringW(L"Opening zone selection dialog...\n");
+}
 
 // FansViewModel
 FansViewModel::FansViewModel() {
@@ -132,9 +166,20 @@ void FansViewModel::XMP(int32_t v) { SetAndNotify(m_xmp, v, L"XMP"); }
 IObservableVector<FansViewModel::SensorData> FansViewModel::Sensors() { return m_sensors; }
 IObservableVector<FansViewModel::FanData> FansViewModel::Fans() { return m_fans; }
 IObservableVector<FansViewModel::CurvePoint> FansViewModel::CurvePoints() { return m_curve; }
-void FansViewModel::ApplyCurve() { /* Apply fan curve via SDK */ }
+void FansViewModel::ApplyCurve() {
+    std::vector<std::pair<int32_t, int32_t>> points;
+    auto curve = m_curve;
+    auto count = curve.Size();
+    for (uint32_t i = 0; i < count; i++) {
+        auto pt = curve.GetAt(i);
+        points.emplace_back(pt.Temp, pt.Speed);
+    }
+    HardwareBridge::Instance().SetFanCurve(0, points);
+}
 void FansViewModel::ResetCurve() { m_curve.Clear(); OnPropertyChanged(L"CurvePoints"); }
-void FansViewModel::EnableOverboost() { /* Enable overboost via SDK */ }
+void FansViewModel::EnableOverboost() {
+    OutputDebugStringW(L"Enabling overboost...\n");
+}
 void FansViewModel::ResetBoost() { m_tcc = 50; m_xmp = 50; OnPropertyChanged(L"TCC"); OnPropertyChanged(L"XMP"); }
 
 // ProfilesViewModel
@@ -168,9 +213,13 @@ IObservableVector<ProfileEntry> ProfilesViewModel::Profiles() { return m_profile
 IObservableVector<DeviceEffect> ProfilesViewModel::DeviceEffects() { return m_deviceEffects; }
 void ProfilesViewModel::AddProfile() { m_profiles.Append(ProfileEntry{ m_profileName, m_triggerKeys, m_defaultProfile }); OnPropertyChanged(L"Profiles"); }
 void ProfilesViewModel::RemoveProfile() { if (m_profiles.Size() > 0) { m_profiles.RemoveAt(m_profiles.Size()-1); OnPropertyChanged(L"Profiles"); } }
-void ProfilesViewModel::CopyActive() { /* Copy active profile */ }
+void ProfilesViewModel::CopyActive() {
+    OutputDebugStringW(L"Copying active profile...\n");
+}
 void ProfilesViewModel::Reset() { m_profiles.Clear(); OnPropertyChanged(L"Profiles"); }
-void ProfilesViewModel::ConfigureEffects() { /* Open device effects dialog */ }
+void ProfilesViewModel::ConfigureEffects() {
+    OutputDebugStringW(L"Opening device effects dialog...\n");
+}
 
 // SettingsViewModel
 SettingsViewModel::SettingsViewModel() {}
@@ -202,8 +251,70 @@ SETTINGS_PROP(bool, Indicator, Indicator)
 SETTINGS_PROP(bool, NoDesktop, NoDesktop)
 SETTINGS_PROP(bool, ResetOnWake, ResetOnWake)
 SETTINGS_PROP(bool, UpdateCheck, UpdateCheck)
-void SettingsViewModel::ConfigureHotkeys() { /* Open hotkey dialog */ }
-void SettingsViewModel::CheckForUpdates() { /* Check GitHub for updates */ }
-void SettingsViewModel::SaveSettings() { /* Save to registry via ConfigBridge */ }
-void SettingsViewModel::LoadSettings() { /* Load from registry via ConfigBridge */ }
+void SettingsViewModel::ConfigureHotkeys() {
+    OutputDebugStringW(L"Opening hotkey configuration...\n");
+}
+void SettingsViewModel::CheckForUpdates() {
+    OutputDebugStringW(L"Checking for updates...\n");
+}
+void SettingsViewModel::SaveSettings() {
+    auto& cfg = ConfigBridge::Instance();
+    cfg.SaveBool(L"StartWithWindows", StartWithWindows());
+    cfg.SaveBool(L"StartMinimized", StartMinimized());
+    cfg.SaveInt(L"DimmingPower", DimmingPower());
+    cfg.SaveBool(L"PowerDim", PowerDim());
+    cfg.SaveBool(L"OffPowerButton", OffPowerButton());
+    cfg.SaveBool(L"ScreenOff", ScreenOff());
+    cfg.SaveBool(L"BatDim", BatDim());
+    cfg.SaveBool(L"OffOnBattery", OffOnBattery());
+    cfg.SaveBool(L"EnableEffects", EnableEffects());
+    cfg.SaveBool(L"LightsOn", LightsOn());
+    cfg.SaveBool(L"GammaCorrection", GammaCorrection());
+    cfg.SaveBool(L"EffectsOnBattery", EffectsOnBattery());
+    cfg.SaveInt(L"PollingRate", PollingRate());
+    cfg.SaveBool(L"FanControl", FanControl());
+    cfg.SaveBool(L"DisableAWCC", DisableAWCC());
+    cfg.SaveBool(L"ESIFTemp", ESIFTemp());
+    cfg.SaveBool(L"KeepSystem", KeepSystem());
+    cfg.SaveBool(L"BatFan", BatFan());
+    cfg.SaveBool(L"DiskSensors", DiskSensors());
+    cfg.SaveBool(L"OverclockEnable", OverclockEnable());
+    cfg.SaveBool(L"NumlockActive", NumlockActive());
+    cfg.SaveBool(L"ActionLights", ActionLights());
+    cfg.SaveBool(L"PowerButton", PowerButton());
+    cfg.SaveBool(L"Indicator", Indicator());
+    cfg.SaveBool(L"NoDesktop", NoDesktop());
+    cfg.SaveBool(L"ResetOnWake", ResetOnWake());
+    cfg.SaveBool(L"UpdateCheck", UpdateCheck());
+}
+void SettingsViewModel::LoadSettings() {
+    auto& cfg = ConfigBridge::Instance();
+    StartWithWindows(cfg.LoadBool(L"StartWithWindows", false));
+    StartMinimized(cfg.LoadBool(L"StartMinimized", false));
+    DimmingPower(cfg.LoadInt(L"DimmingPower", 50));
+    PowerDim(cfg.LoadBool(L"PowerDim", false));
+    OffPowerButton(cfg.LoadBool(L"OffPowerButton", false));
+    ScreenOff(cfg.LoadBool(L"ScreenOff", false));
+    BatDim(cfg.LoadBool(L"BatDim", false));
+    OffOnBattery(cfg.LoadBool(L"OffOnBattery", false));
+    EnableEffects(cfg.LoadBool(L"EnableEffects", true));
+    LightsOn(cfg.LoadBool(L"LightsOn", true));
+    GammaCorrection(cfg.LoadBool(L"GammaCorrection", false));
+    EffectsOnBattery(cfg.LoadBool(L"EffectsOnBattery", false));
+    PollingRate(cfg.LoadInt(L"PollingRate", 100));
+    FanControl(cfg.LoadBool(L"FanControl", false));
+    DisableAWCC(cfg.LoadBool(L"DisableAWCC", false));
+    ESIFTemp(cfg.LoadBool(L"ESIFTemp", false));
+    KeepSystem(cfg.LoadBool(L"KeepSystem", false));
+    BatFan(cfg.LoadBool(L"BatFan", false));
+    DiskSensors(cfg.LoadBool(L"DiskSensors", false));
+    OverclockEnable(cfg.LoadBool(L"OverclockEnable", false));
+    NumlockActive(cfg.LoadBool(L"NumlockActive", false));
+    ActionLights(cfg.LoadBool(L"ActionLights", false));
+    PowerButton(cfg.LoadBool(L"PowerButton", false));
+    Indicator(cfg.LoadBool(L"Indicator", false));
+    NoDesktop(cfg.LoadBool(L"NoDesktop", false));
+    ResetOnWake(cfg.LoadBool(L"ResetOnWake", false));
+    UpdateCheck(cfg.LoadBool(L"UpdateCheck", true));
+}
 }

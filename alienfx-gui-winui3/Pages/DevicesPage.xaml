@@ -8,54 +8,68 @@
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Detected Devices" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="DevicesList" MinHeight="100" SelectionMode="Single">
+                    <ListView x:Name="DevicesList" MinHeight="100" SelectionMode="Single"
+                              ItemsSource="{x:Bind ViewModel.FoundDevices, Mode=OneWay}">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="local:FoundDevice">
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <Ellipse Width="12" Height="12" Fill="{Binding StatusColor}" />
-                                    <TextBlock Text="{Binding DeviceName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding VidPid}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                    <Ellipse Width="12" Height="12" VerticalAlignment="Center">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush>
+                                                <SolidColorBrush.Color>
+                                                    <Binding Path="Connected">
+                                                        <Binding.Converter>
+                                                            <!-- Simple: green if connected, gray if not -->
+                                                        </Binding.Converter>
+                                                    </Binding>
+                                                </SolidColorBrush.Color>
+                                            </SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{x:Bind VidPid}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Detect" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Load Map" />
-                        <Button Content="Save Map" />
+                        <Button Content="Detect" Style="{StaticResource AccentButtonStyle}" Click="OnDetect" />
+                        <Button Content="Load Map" Click="OnLoadMap" />
+                        <Button Content="Save Map" Click="OnSaveMap" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Zones" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="ZonesList" MinHeight="80" SelectionMode="Single">
+                    <ListView x:Name="ZonesList" MinHeight="80" SelectionMode="Single"
+                              ItemsSource="{x:Bind ViewModel.Zones, Mode=OneWay}">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock Text="{Binding ZoneName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding LightCount}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
-                                </StackPanel>
+                            <DataTemplate x:DataType="hstring">
+                                <TextBlock Text="{x:Bind Mode=OneWay}" VerticalAlignment="Center" />
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Add Zone" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Delete Zone" />
-                        <Button Content="Select From List" />
+                        <Button Content="Add Zone" Style="{StaticResource AccentButtonStyle}" Click="OnAddZone" />
+                        <Button Content="Delete Zone" Click="OnDeleteZone" />
+                        <Button Content="Select From List" Click="OnSelectFromList" />
                     </StackPanel>
                 </StackPanel>
             </Border>
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Light Configuration" Style="{StaticResource SectionHeaderStyle}" />
-                    <TextBox x:Name="LightName" Header="Light Name" PlaceholderText="Enter light name" />
+                    <TextBox x:Name="LightName" Header="Light Name" PlaceholderText="Enter light name"
+                             Text="{x:Bind ViewModel.LightName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="White Balance" />
-                        <Button Content="Clear Light" />
+                        <Button Content="White Balance" Click="OnWhiteBalance" />
+                        <Button Content="Clear Light" Click="OnClearLight" />
                     </StackPanel>
-                    <CheckBox x:Name="ShowGridNames" Content="Show Grid Names" />
-                    <TextBlock x:Name="DeviceInfo" Foreground="{StaticResource AlienTextSecondary}" />
+                    <CheckBox x:Name="ShowGridNames" Content="Show Grid Names"
+                              IsChecked="{x:Bind ViewModel.ShowGridNames, Mode=TwoWay}" />
+                    <TextBlock x:Name="DeviceInfo" Text="{x:Bind ViewModel.DeviceInfo, Mode=OneWay}"
+                               Foreground="{StaticResource AlienTextSecondary}" />
                 </StackPanel>
             </Border>
         </StackPanel>

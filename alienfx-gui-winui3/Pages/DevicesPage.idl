@@ -1,8 +1,25 @@
 namespace AlienFX
 {
+    runtimeclass FoundDevice
+    {
+        String Name;
+        String VidPid;
+        Boolean Connected;
+    }
+
     [default_interface]
     runtimeclass DevicesPage : Microsoft.UI.Xaml.Controls.Page
     {
         DevicesPage();
+        ViewModel.DevicesViewModel ViewModel{ get; };
+
+        void OnDetect(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnLoadMap(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnSaveMap(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnAddZone(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnDeleteZone(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnSelectFromList(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnWhiteBalance(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+        void OnClearLight(Object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
     }
 }

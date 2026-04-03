@@ -13,7 +13,7 @@ namespace winrt::AlienFX::Converters::implementation
     {
         if (auto b = value.try_as<bool>())
         {
-            auto invert = parameter.try_as<hstring>() && parameter.as<hstring() == L"Inverse";
+            auto invert = parameter.try_as<hstring>() && parameter.as<hstring>() == L"Inverse";
             bool result = invert ? !b.value() : b.value();
             return box_value(result ? Visibility::Visible : Visibility::Collapsed);
         }

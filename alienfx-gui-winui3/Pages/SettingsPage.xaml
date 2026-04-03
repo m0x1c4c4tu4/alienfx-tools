@@ -7,44 +7,44 @@
             <TextBlock Text="Settings" Style="{StaticResource PageTitleStyle}" />
             <Expander Header="Startup" IsExpanded="True">
                 <StackPanel Spacing="8">
-                    <CheckBox x:Name="StartWithWindows" Content="Start with Windows" />
-                    <CheckBox x:Name="StartMinimized" Content="Start Minimized" />
+                    <CheckBox x:Name="StartWithWindows" Content="Start with Windows" IsChecked="{Binding StartWithWindows, Mode=TwoWay}" />
+                    <CheckBox x:Name="StartMinimized" Content="Start Minimized" IsChecked="{Binding StartMinimized, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
             <Expander Header="Power &amp; Dimming" IsExpanded="True">
                 <StackPanel Spacing="8">
-                    <Slider x:Name="DimmingPower" Header="Dimming Power" Minimum="0" Maximum="100" Value="50" />
-                    <CheckBox x:Name="PowerDim" Content="Dim Power Button" />
-                    <CheckBox x:Name="OffPowerButton" Content="Off Power Button LED" />
-                    <CheckBox x:Name="ScreenOff" Content="Off When Screen Off" />
-                    <CheckBox x:Name="BatDim" Content="Dim on Battery" />
-                    <CheckBox x:Name="OffOnBattery" Content="Off on Battery" />
+                    <Slider x:Name="DimmingPower" Header="Dimming Power" Minimum="0" Maximum="100" Value="{Binding DimmingPower, Mode=TwoWay}" />
+                    <CheckBox x:Name="PowerDim" Content="Dim Power Button" IsChecked="{Binding PowerDim, Mode=TwoWay}" />
+                    <CheckBox x:Name="OffPowerButton" Content="Off Power Button LED" IsChecked="{Binding OffPowerButton, Mode=TwoWay}" />
+                    <CheckBox x:Name="ScreenOff" Content="Off When Screen Off" IsChecked="{Binding ScreenOff, Mode=TwoWay}" />
+                    <CheckBox x:Name="BatDim" Content="Dim on Battery" IsChecked="{Binding BatDim, Mode=TwoWay}" />
+                    <CheckBox x:Name="OffOnBattery" Content="Off on Battery" IsChecked="{Binding OffOnBattery, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
             <Expander Header="Effects" IsExpanded="True">
                 <StackPanel Spacing="8">
-                    <CheckBox x:Name="EnableEffects" Content="Enable Effects" />
-                    <CheckBox x:Name="LightsOn" Content="Lights On" />
-                    <CheckBox x:Name="GammaCorrection" Content="Gamma Correction" />
-                    <CheckBox x:Name="EffectsOnBattery" Content="Effects on Battery" />
-                    <Slider x:Name="PollingRate" Header="Polling Rate (ms)" Minimum="10" Maximum="1000" Value="100" />
+                    <CheckBox x:Name="EnableEffects" Content="Enable Effects" IsChecked="{Binding EnableEffects, Mode=TwoWay}" />
+                    <CheckBox x:Name="LightsOn" Content="Lights On" IsChecked="{Binding LightsOn, Mode=TwoWay}" />
+                    <CheckBox x:Name="GammaCorrection" Content="Gamma Correction" IsChecked="{Binding GammaCorrection, Mode=TwoWay}" />
+                    <CheckBox x:Name="EffectsOnBattery" Content="Effects on Battery" IsChecked="{Binding EffectsOnBattery, Mode=TwoWay}" />
+                    <Slider x:Name="PollingRate" Header="Polling Rate (ms)" Minimum="10" Maximum="1000" Value="{Binding PollingRate, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
             <Expander Header="Hardware" IsExpanded="True">
                 <StackPanel Spacing="8">
-                    <CheckBox x:Name="FanControl" Content="Fan Control" />
-                    <CheckBox x:Name="DisableAWCC" Content="Disable AWCC" />
-                    <CheckBox x:Name="ESIFTemp" Content="ESIF Temperature" />
-                    <CheckBox x:Name="KeepSystem" Content="Keep System Awake" />
-                    <CheckBox x:Name="BatFan" Content="Fans on Battery" />
-                    <CheckBox x:Name="DiskSensors" Content="Disk Sensors" />
-                    <CheckBox x:Name="OverclockEnable" Content="Overclock Enable" />
-                    <CheckBox x:Name="NumlockActive" Content="Numlock Active" />
-                    <CheckBox x:Name="ActionLights" Content="Action Lights" />
-                    <CheckBox x:Name="PowerButton" Content="Is Power Button" />
-                    <CheckBox x:Name="Indicator" Content="Indicator" />
-                    <CheckBox x:Name="NoDesktop" Content="No Desktop Exception" />
-                    <CheckBox x:Name="ResetOnWake" Content="Reset on Wake" />
+                    <CheckBox x:Name="FanControl" Content="Fan Control" IsChecked="{Binding FanControl, Mode=TwoWay}" />
+                    <CheckBox x:Name="DisableAWCC" Content="Disable AWCC" IsChecked="{Binding DisableAWCC, Mode=TwoWay}" />
+                    <CheckBox x:Name="ESIFTemp" Content="ESIF Temperature" IsChecked="{Binding ESIFTemp, Mode=TwoWay}" />
+                    <CheckBox x:Name="KeepSystem" Content="Keep System Awake" IsChecked="{Binding KeepSystem, Mode=TwoWay}" />
+                    <CheckBox x:Name="BatFan" Content="Fans on Battery" IsChecked="{Binding BatFan, Mode=TwoWay}" />
+                    <CheckBox x:Name="DiskSensors" Content="Disk Sensors" IsChecked="{Binding DiskSensors, Mode=TwoWay}" />
+                    <CheckBox x:Name="OverclockEnable" Content="Overclock Enable" IsChecked="{Binding OverclockEnable, Mode=TwoWay}" />
+                    <CheckBox x:Name="NumlockActive" Content="Numlock Active" IsChecked="{Binding NumlockActive, Mode=TwoWay}" />
+                    <CheckBox x:Name="ActionLights" Content="Action Lights" IsChecked="{Binding ActionLights, Mode=TwoWay}" />
+                    <CheckBox x:Name="PowerButton" Content="Is Power Button" IsChecked="{Binding PowerButton, Mode=TwoWay}" />
+                    <CheckBox x:Name="Indicator" Content="Indicator" IsChecked="{Binding Indicator, Mode=TwoWay}" />
+                    <CheckBox x:Name="NoDesktop" Content="No Desktop Exception" IsChecked="{Binding NoDesktop, Mode=TwoWay}" />
+                    <CheckBox x:Name="ResetOnWake" Content="Reset on Wake" IsChecked="{Binding ResetOnWake, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
             <Expander Header="Hotkeys" IsExpanded="True">
@@ -55,7 +55,7 @@
             </Expander>
             <Expander Header="Update" IsExpanded="True">
                 <StackPanel Spacing="8">
-                    <CheckBox x:Name="UpdateCheck" Content="Check for Updates" />
+                    <CheckBox x:Name="UpdateCheck" Content="Check for Updates" IsChecked="{Binding UpdateCheck, Mode=TwoWay}" />
                     <Button Content="Check Now" HorizontalAlignment="Left" />
                 </StackPanel>
             </Expander>

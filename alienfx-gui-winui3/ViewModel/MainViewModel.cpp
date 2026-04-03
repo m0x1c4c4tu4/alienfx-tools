@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ViewModel/MainViewModel.h"
+#include "Helpers/HardwareBridge.h"
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
@@ -25,7 +26,19 @@ namespace winrt::AlienFX::ViewModel::implementation
 
     IObservableVector<Model::DeviceItem> MainViewModel::Devices() { return m_devices; }
 
-    void MainViewModel::ToggleLights() { LightsOn(!m_lightsOn); }
-    void MainViewModel::ToggleDimmed() { LightsDimmed(!m_lightsDimmed); }
-    void MainViewModel::ToggleEffects() { EffectsEnabled(!m_effectsEnabled); }
+    void MainViewModel::ToggleLights()
+    {
+        LightsOn(!m_lightsOn);
+        HardwareBridge::Instance().SetAllLightsOff(!m_lightsOn);
+    }
+    void MainViewModel::ToggleDimmed()
+    {
+        LightsDimmed(!m_lightsDimmed);
+        HardwareBridge::Instance().SetDimmed(!m_lightsDimmed);
+    }
+    void MainViewModel::ToggleEffects()
+    {
+        EffectsEnabled(!m_effectsEnabled);
+        HardwareBridge::Instance().SetEffectsEnabled(!m_effectsEnabled);
+    }
 }

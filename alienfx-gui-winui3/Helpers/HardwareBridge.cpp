@@ -96,8 +96,25 @@ namespace winrt::AlienFX::Helpers
         if (m_fxhl) m_fxhl->SetEffectsEnabled(enabled);
     }
 
-    void HardwareBridge::SetFanCurve(int32_t, std::vector<std::pair<int32_t, int32_t>> const&)
+    void HardwareBridge::SetFanCurve(int32_t fanId, std::vector<std::pair<int32_t, int32_t>> const& points)
     {
+        if (!m_conf) return;
+
+        // ConfigHandler has no direct SetFanCurve method; fan curves are managed
+        // through ConfigFan + ACPI BIOS calls in the Win32 subsystem.
+        // Log the operation and persist via ConfigBridge for now.
+        wchar_t msg[256];
+        swprintf_s(msg, L"Setting fan curve with %zu points for fan %d\n", points.size(), fanId);
+        OutputDebugStringW(msg);
+
+        // Persist the curve via ConfigBridge (separate temp/speed arrays).
+        auto temps = winrt::single_threaded_vector<int32_t>();
+        auto speeds = winrt::single_threaded_vector<int32_t>();
+        for (auto const& [temp, speed] : points) {
+            temps.Append(temp);
+            speeds.Append(speed);
+        }
+        ConfigBridge::Instance().SaveFanCurve(fanId, temps.GetView(), speeds.GetView());
     }
 
     void HardwareBridge::SetPowerMode(int32_t mode)

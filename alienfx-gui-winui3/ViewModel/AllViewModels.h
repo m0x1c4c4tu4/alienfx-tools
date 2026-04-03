@@ -8,6 +8,7 @@ namespace winrt::AlienFX::ViewModel::implementation {
         EventsViewModel();
         int32_t EventSource(); void EventSource(int32_t v);
         int32_t CutLevel(); void CutLevel(int32_t v);
+        winrt::Windows::UI::Color SelectedColor(); void SelectedColor(winrt::Windows::UI::Color const& v);
         bool NoEventColor(); void NoEventColor(bool v);
         bool EventBackground(); void EventBackground(bool v);
         bool EventPriority(); void EventPriority(bool v);

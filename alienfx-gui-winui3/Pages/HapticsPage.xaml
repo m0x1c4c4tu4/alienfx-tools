@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page x:Class="winrt::AlienFX::HapticsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:AlienFX.ViewModel">
+    <Page.DataContext>
+        <vm:HapticsViewModel />
+    </Page.DataContext>
     <ScrollViewer>
         <StackPanel Spacing="16">
             <TextBlock Text="Audio Haptics" Style="{StaticResource PageTitleStyle}" />
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Frequency Groups" Style="{StaticResource SectionHeaderStyle}" />
-                    <ListView x:Name="FreqGroups" MinHeight="100" SelectionMode="Single">
+                    <ListView x:Name="FreqGroups" MinHeight="100" SelectionMode="Single"
+                              ItemsSource="{Binding Groups}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock Text="{Binding GroupName}" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding FreqRange}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Range}" Foreground="{StaticResource AlienTextSecondary}" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Add Group" Style="{StaticResource AccentButtonStyle}" />
-                        <Button Content="Remove Group" />
+                        <Button Content="Add Group" Style="{StaticResource AccentButtonStyle}" Click="AddGroupBtn_Click" />
+                        <Button Content="Remove Group" Click="RemoveGroupBtn_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -35,14 +40,14 @@
             <Border Style="{StaticResource CardStyle}">
                 <StackPanel Spacing="12">
                     <TextBlock Text="Settings" Style="{StaticResource SectionHeaderStyle}" />
-                    <Slider x:Name="Tact" Header="Tact" Minimum="0" Maximum="1000" Value="500" />
-                    <Slider x:Name="Width" Header="Width" Minimum="1" Maximum="50" Value="10" />
-                    <CheckBox x:Name="HapticsCircle" Content="Circle" />
-                    <CheckBox x:Name="HapticsRandom" Content="Random" />
-                    <CheckBox x:Name="HapticsPhase" Content="Phase" />
-                    <CheckBox x:Name="HapticsBackground" Content="Background" />
-                    <CheckBox x:Name="HapticsReversePos" Content="Reverse Position" />
-                    <CheckBox x:Name="HapticsSpectrum" Content="Spectrum" />
+                    <Slider x:Name="Tact" Header="Tact" Minimum="0" Maximum="1000" Value="{Binding Tact, Mode=TwoWay}" />
+                    <Slider x:Name="Width" Header="Width" Minimum="1" Maximum="50" Value="{Binding Width, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsCircle" Content="Circle" IsChecked="{Binding Circle, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsRandom" Content="Random" IsChecked="{Binding Random, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsPhase" Content="Phase" IsChecked="{Binding Phase, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsBackground" Content="Background" IsChecked="{Binding Background, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsReversePos" Content="Reverse Position" IsChecked="{Binding ReversePos, Mode=TwoWay}" />
+                    <CheckBox x:Name="HapticsSpectrum" Content="Spectrum" IsChecked="{Binding Spectrum, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
         </StackPanel>
