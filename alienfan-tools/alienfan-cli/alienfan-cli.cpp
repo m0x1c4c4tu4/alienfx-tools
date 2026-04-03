@@ -183,7 +183,8 @@ int main(int argc, char* argv[])
             while (vid != string::npos) {
                 size_t argPos = arg.find(',', vid + 1);
                 args.push_back({ arg.substr(vid + 1, (argPos == string::npos ? arg.length() : argPos) - vid - 1) });
-                args.back().num = atoi(args.back().str.c_str());
+                char* endptr = nullptr;
+                args.back().num = (int)strtol(args.back().str.c_str(), &endptr, 10);
                 vid = argPos;
             }
 
