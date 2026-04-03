@@ -13,15 +13,15 @@ extern "C" {
 
 // debug print
 #ifdef _DEBUG
-//#define DebugPrint(_x_) printf("%s",string(_x_).c_str());
-#define DebugPrint(_x_) OutputDebugString(string(_x_).c_str());
+//#define DebugPrint(_x_) printf("%s",std::string(_x_).c_str());
+#define DebugPrint(_x_) OutputDebugString(std::string(_x_).c_str());
 #else
 #define DebugPrint(_x_)
 #endif
 
 namespace AlienFX_SDK {
 
-	vector<Afx_icommand> *Functions::SetMaskAndColor(vector<Afx_icommand>* mods, Afx_lightblock* act, bool needInverse, DWORD index) {
+	std::vector<Afx_icommand> *Functions::SetMaskAndColor(std::vector<Afx_icommand>* mods, Afx_lightblock* act, bool needInverse, DWORD index) {
 		Afx_colorcode c;
 		c.ci = index ? index : needInverse ? ~((1 << act->index)) : 1 << act->index;
 		if (version < API_V4) {
@@ -43,7 +43,7 @@ namespace AlienFX_SDK {
 						(byte)((c2.g & 0xf0) | ((c2.b & 0xf0) >> 4))}});
 			break;
 		case API_V6: { //case API_V9: {
-			vector<byte> command{ 0x51, v6OpCodes[c1.type], 0xd0, v6TCodes[c1.type], (byte)index, c1.r, c1.g, c1.b };
+			std::vector<byte> command{ 0x51, v6OpCodes[c1.type], 0xd0, v6TCodes[c1.type], (byte)index, c1.r, c1.g, c1.b };
 			byte mask = (byte)(c1.r ^ c1.g ^ c1.b ^ index);
 			switch (c1.type) {
 			case AlienFX_A_Color:
@@ -71,11 +71,11 @@ namespace AlienFX_SDK {
 		return mods;
 	}
 
-	inline bool Functions::PrepareAndSend(const byte* command, vector<Afx_icommand> mods) {
+	inline bool Functions::PrepareAndSend(const byte* command, std::vector<Afx_icommand> mods) {
 		return PrepareAndSend(command, &mods);
 	}
 
-	bool Functions::PrepareAndSend(const byte *command, vector<Afx_icommand> *mods) {
+	bool Functions::PrepareAndSend(const byte *command, std::vector<Afx_icommand> *mods) {
 
 		if (this && devHandle) { // Is device initialized?
 
@@ -129,12 +129,12 @@ namespace AlienFX_SDK {
 	}
 
 	void Functions::SavePowerBlock(byte blID, Afx_lightblock* act, bool needSave, bool needSecondary, bool needInverse) {
-		vector<Afx_icommand> mods, group = { {2, {blID}} };
+		std::vector<Afx_icommand> mods, group = { {2, {blID}} };
 		PrepareAndSend(COMMV1_saveGroup, &group);
 		PrepareAndSend(COMMV1_color, SetMaskAndColor(&mods, act));
 		if (needSecondary) {
 			Afx_lightblock t = *act;
-			swap(t.act.front(), t.act.back());
+			std::swap(t.act.front(), t.act.back());
 			PrepareAndSend(COMMV1_saveGroup, &group);
 			PrepareAndSend(COMMV1_color, SetMaskAndColor(&mods, &t));
 		}
@@ -234,7 +234,7 @@ namespace AlienFX_SDK {
 						description += descbuf[i];
 				SetCommTimeouts(devHandle, &timeouts);
 			}
-			//DebugPrint("Probe done, type " + to_string(version) + "\n");
+			//DebugPrint("Probe done, type " + std::to_string(version) + "\n");
 		}
 		delete[] deviceInterfaceDetailData;
 		return version != API_UNKNOWN;
@@ -305,7 +305,7 @@ namespace AlienFX_SDK {
 			chain = 1;
 			inSet = PrepareAndSend(COMMV1_reset);
 			WaitForReady();
-			DebugPrint("Post-Reset status: " + to_string(GetDeviceStatus()) + "\n");
+			DebugPrint("Post-Reset status: " + std::to_string(GetDeviceStatus()) + "\n");
 		} break;
 		default: inSet = true;
 		}
@@ -331,7 +331,7 @@ namespace AlienFX_SDK {
 			{
 				inSet = !PrepareAndSend(COMMV1_update);
 				//WaitForBusy();
-				DebugPrint("Post-update status: " + to_string(GetDeviceStatus()) + "\n");
+				DebugPrint("Post-update status: " + std::to_string(GetDeviceStatus()) + "\n");
 			} break;
 			default: inSet = false;
 			}
@@ -345,21 +345,21 @@ namespace AlienFX_SDK {
 		return SetAction(&act);
 	}
 
-	void Functions::AddV8DataBlock(byte bPos, vector<Afx_icommand>* mods, Afx_lightblock* act) {
+	void Functions::AddV8DataBlock(byte bPos, std::vector<Afx_icommand>* mods, Afx_lightblock* act) {
 		mods->push_back( {bPos, {act->index,v8OpCodes[act->act.front().type], act->act.front().tempo, 0xa5, act->act.front().time, 0xa,
 			act->act.front().r, act->act.front().g,act->act.front().b,
 			act->act.back().r,act->act.back().g,act->act.back().b,
 			2/*(byte)(act->act.size() > 1 ? 2 : 1)*/ } } );
 	}
 
-	void Functions::AddV5DataBlock(byte bPos, vector<Afx_icommand>* mods, byte index, Afx_action* c) {
+	void Functions::AddV5DataBlock(byte bPos, std::vector<Afx_icommand>* mods, byte index, Afx_action* c) {
 		mods->push_back( {bPos, { (byte)(index + 1),c->r,c->g,c->b} });
 	}
 
-	bool Functions::SetMultiColor(vector<UCHAR> *lights, Afx_action c) {
+	bool Functions::SetMultiColor(std::vector<UCHAR> *lights, Afx_action c) {
 		bool val = false;
 		Afx_lightblock act{ 0, {c} };
-		vector<Afx_icommand> mods;
+		std::vector<Afx_icommand> mods;
 		if (!inSet) Reset();
 		switch (version) {
 		case API_V8: {
@@ -428,9 +428,9 @@ namespace AlienFX_SDK {
 		return val;
 	}
 
-	bool Functions::SetMultiAction(vector<Afx_lightblock> *act, bool save) {
+	bool Functions::SetMultiAction(std::vector<Afx_lightblock> *act, bool save) {
 		bool val = true;
-		vector<Afx_icommand> mods;
+		std::vector<Afx_icommand> mods;
 
 		if (!inSet) Reset();
 		switch (version) {
@@ -470,7 +470,7 @@ namespace AlienFX_SDK {
 
 	bool Functions::SetV4Action(Afx_lightblock* act) {
 		bool res = false;
-		vector<Afx_icommand> mods;
+		std::vector<Afx_icommand> mods;
 		PrepareAndSend(COMMV4_colorSel, { {6,{act->index}} });
 		for (auto ca = act->act.begin(); ca != act->act.end();) {
 			// 3 actions per record..
@@ -490,7 +490,7 @@ namespace AlienFX_SDK {
 			return false;
 		if (!inSet) Reset();
 
-		vector<Afx_icommand> mods;
+		std::vector<Afx_icommand> mods;
 		switch (version) {
 		case API_V8:
 			AddV8DataBlock(5, &mods, act);
@@ -519,7 +519,7 @@ namespace AlienFX_SDK {
 			case AlienFX_A_Color: // it's a color, so set as color
 				return PrepareAndSend(COMMV4_setOneColor, { {3, {act->act.front().r,act->act.front().g,act->act.front().b, 0, 1, (byte)act->index } } });
 			case AlienFX_A_Power: { // Set power
-				vector<Afx_lightblock> t = { *act };
+				std::vector<Afx_lightblock> t = { *act };
 				return SetPowerAction(&t);
 			} break;
 			default: // Set action
@@ -532,7 +532,7 @@ namespace AlienFX_SDK {
 			switch (act->act.front().type) {
 			case AlienFX_A_Power: { // SetPowerAction for power!
 				if (act->act.size() > 1) {
-					vector<Afx_lightblock> t = { {*act} };
+					std::vector<Afx_lightblock> t = { {*act} };
 					return SetPowerAction(&t);
 				}
 				break;
@@ -551,7 +551,7 @@ namespace AlienFX_SDK {
 				Afx_lightblock t = { act->index, {*ca} };
 				if (act->act.size() > 1)
 					t.act.push_back(ca + 1 != act->act.end() ? *(ca + 1) : act->act.front());
-				DebugPrint("SDK: Set light " + to_string(act->index) + "\n");
+				DebugPrint("SDK: Set light " + std::to_string(act->index) + "\n");
 				PrepareAndSend(COMMV1_color, SetMaskAndColor(&mods, &t));
 			}
 			//DebugPrint("SDK: Loop\n");
@@ -568,7 +568,7 @@ namespace AlienFX_SDK {
 		return false;
 	}
 
-	bool Functions::SetPowerAction(vector<Afx_lightblock> *act, bool save) {
+	bool Functions::SetPowerAction(std::vector<Afx_lightblock> *act, bool save) {
 		Afx_lightblock* pwr = NULL;
 		switch (version) {
 		// ToDo - APIv8 profile save
@@ -684,9 +684,9 @@ namespace AlienFX_SDK {
 		return true;
 	}
 
-	bool Functions::SetBrightness(BYTE brightness, BYTE gbr, vector<Afx_light> *mappings, bool power) {
+	bool Functions::SetBrightness(BYTE brightness, BYTE gbr, std::vector<Afx_light> *mappings, bool power) {
 		// return true if update needed
-		DebugPrint("State update: PID: " + to_string(pid) + ", brightness: " + to_string(brightness) + ", power: " + to_string(power) + "\n");
+		DebugPrint("State update: PID: " + std::to_string(pid) + ", brightness: " + std::to_string(brightness) + ", power: " + std::to_string(power) + "\n");
 
 		if (inSet) UpdateColors();
 		int oldBr = bright;
@@ -701,7 +701,7 @@ namespace AlienFX_SDK {
 			break;
 		case API_V4: {
 			int pos = 6;
-			vector<Afx_icommand> mods{ {3,{(byte)(0x64 - bright), 0, (byte)mappings->size()}}/*, { 6, idlist}*/ };
+			std::vector<Afx_icommand> mods{ {3,{(byte)(0x64 - bright), 0, (byte)mappings->size()}}/*, { 6, idlist}*/ };
 			for (auto i = mappings->begin(); i < mappings->end(); i++)
 				if (!i->flags || power) {
 					mods.push_back({ pos++, {(byte)i->lightid} });
@@ -729,7 +729,7 @@ namespace AlienFX_SDK {
 	}
 
 	bool Functions::SetGlobalEffects(byte effType, byte mode, byte nc, byte tempo, Afx_colorcode act1, Afx_colorcode act2) {
-		vector<Afx_icommand> mods;
+		std::vector<Afx_icommand> mods;
 		switch (version) {
 		case API_V8:
 			PrepareAndSend(COMMV8_effectReady);
@@ -771,7 +771,7 @@ namespace AlienFX_SDK {
 			{
 				if (HidD_GetInputReport(devHandle, buffer, length)) {
 					//if (DeviceIoControl(devHandle, IOCTL_HID_GET_INPUT_REPORT, 0, 0, buffer, length, &written, NULL))
-					//DebugPrint("Status: " + to_string(buffer[2]) + "\n");
+					//DebugPrint("Status: " + std::to_string(buffer[2]) + "\n");
 					return buffer[2];
 				}
 			} break;
@@ -869,23 +869,23 @@ namespace AlienFX_SDK {
 			devInfo->present = true;
 			activeLights += (unsigned)devInfo->lights.size();
 			if (devInfo->dev) {
-				DebugPrint("Scan: VID: " + to_string(devInfo->vid) + ", PID: " + to_string(devInfo->pid) + ", Version: "
-					+ to_string(dev->version) + " - present already\n");
+				DebugPrint("Scan: VID: " + std::to_string(devInfo->vid) + ", PID: " + std::to_string(devInfo->pid) + ", Version: "
+					+ std::to_string(dev->version) + " - present already\n");
 				delete dev;
 			}
 			else {
 				devInfo->dev = dev;
 				deviceListChanged = devInfo->arrived = true;
 				//devInfo->version = dev->version;
-				DebugPrint("Scan: VID: " + to_string(devInfo->vid) + ", PID: " + to_string(devInfo->pid) + ", Version: "
-					+ to_string(dev->version) + " - return back\n");
+				DebugPrint("Scan: VID: " + std::to_string(devInfo->vid) + ", PID: " + std::to_string(devInfo->pid) + ", Version: "
+					+ std::to_string(dev->version) + " - return back\n");
 			}
 		}
 		else {
 			fxdevs.push_back({ dev->pid, dev->vid, dev, dev->description/*, dev->version*/ });
 			deviceListChanged = fxdevs.back().arrived = fxdevs.back().present = true;
-			DebugPrint("Scan: VID: " + to_string(dev->vid) + ", PID: " + to_string(dev->pid) + ", Version: "
-				+ to_string(dev->version) + " - new device added\n");
+			DebugPrint("Scan: VID: " + std::to_string(dev->vid) + ", PID: " + std::to_string(dev->pid) + ", Version: "
+				+ std::to_string(dev->version) + " - new device added\n");
 		}
 		activeDevices++;
 	}
@@ -904,7 +904,7 @@ namespace AlienFX_SDK {
 			SP_DEVICE_INTERFACE_DATA deviceInterfaceData{ sizeof(SP_DEVICE_INTERFACE_DATA) };
 			for (DWORD dw = 0; SetupDiEnumDeviceInterfaces(hDevInfo, NULL, &GUID_DEVINTERFACE_HID, dw, &deviceInterfaceData); dw++) {
 				dev = new Functions();
-				//DebugPrint("Testing device #" + to_string(dw) + ", ID=" + to_string(deviceInterfaceData.Reserved) + "\n");
+				//DebugPrint("Testing device #" + std::to_string(dw) + ", ID=" + std::to_string(deviceInterfaceData.Reserved) + "\n");
 				if ((deviceInterfaceData.Flags & SPINT_ACTIVE) && dev->AlienFXProbeDevice(hDevInfo, &deviceInterfaceData))
 				{
 					AlienFxUpdateDevice(dev);
@@ -929,7 +929,7 @@ namespace AlienFX_SDK {
 		for (auto i = fxdevs.begin(); i != fxdevs.end(); i++)
 			if (!i->present && i->dev) {
 				deviceListChanged = true;
-				DebugPrint("Scan: VID: " + to_string(i->vid) + ", PID: " + to_string(i->pid) + " - removed\n");
+				DebugPrint("Scan: VID: " + std::to_string(i->vid) + ", PID: " + std::to_string(i->pid) + " - removed\n");
 				break;
 			}
 		return deviceListChanged;
@@ -978,7 +978,7 @@ namespace AlienFX_SDK {
 		return nullptr;
 	}
 
-	vector<Afx_group> *Mappings::GetGroups() {
+	std::vector<Afx_group> *Mappings::GetGroups() {
 		return &groups;
 	}
 
@@ -1025,7 +1025,7 @@ namespace AlienFX_SDK {
 		byte lID;
 		for (vindex = 0; RegEnumValue(mainKey, vindex, kName, &(len = 255), NULL, NULL, (LPBYTE)name, &(lend = 255)) == ERROR_SUCCESS; vindex++) {
 			if (sscanf_s(kName, "Dev#%hd_%hd", &vid, &pid) == 2) {
-				AddDeviceById(MAKELPARAM(pid, vid))->name = string(name);
+				AddDeviceById(MAKELPARAM(pid, vid))->name = std::string(name);
 				continue;
 			}
 			if (sscanf_s(kName, "DevWhite#%hd_%hd", &vid, &pid) == 2) {
@@ -1060,7 +1060,7 @@ namespace AlienFX_SDK {
 					dID = 0x1ffff;
 				}
 				groups.push_back({ (DWORD)dID, name });
-				vector<Afx_groupLight>* gl = &groups.back().lights;
+				std::vector<Afx_groupLight>* gl = &groups.back().lights;
 				if (RegGetValue(mainKey, kName, "LightList", RRF_RT_REG_BINARY, 0, NULL, &lend) != ERROR_FILE_NOT_FOUND) {
 					gl->resize(lend / sizeof(DWORD));
 					RegGetValue(mainKey, kName, "LightList", RRF_RT_REG_BINARY, 0, gl->data(), &lend);
@@ -1082,8 +1082,8 @@ namespace AlienFX_SDK {
 
 		for (auto i = fxdevs.begin(); i != fxdevs.end(); i++) {
 			// Saving device data..
-			string devID = to_string(i->vid) + "_" + to_string(i->pid);
-			string name = "Dev#" + devID;
+			std::string devID = std::to_string(i->vid) + "_" + std::to_string(i->pid);
+			std::string name = "Dev#" + devID;
 			if (i->name.length())
 				RegSetValueEx(hKeybase, name.c_str(), 0, REG_SZ, (BYTE *) i->name.c_str(), (DWORD) i->name.length() );
 			name = "DevWhite#" + devID;
@@ -1092,7 +1092,7 @@ namespace AlienFX_SDK {
 			RegSetValueEx(hKeybase, name.c_str(), 0, REG_DWORD, (BYTE*)&br, sizeof(DWORD));
 			for (auto cl = i->lights.begin(); cl < i->lights.end(); cl++) {
 				// Saving all lights from current device
-				string name = "Light" + to_string(i->devID) + "-" + to_string(cl->lightid);
+				std::string name = "Light" + std::to_string(i->devID) + "-" + std::to_string(cl->lightid);
 				RegCreateKey(hKeybase, name.c_str(), &hKeyStore);
 				RegSetValueEx(hKeyStore, "Name", 0, REG_SZ, (BYTE*)cl->name.c_str(), (DWORD)cl->name.length());
 				RegSetValueEx(hKeyStore, "Flags", 0, REG_DWORD, (BYTE*)&cl->data, sizeof(DWORD));
@@ -1101,7 +1101,7 @@ namespace AlienFX_SDK {
 		}
 
 		for (auto i = groups.begin(); i != groups.end(); i++) {
-			string name = "Group" + to_string(i->gid);
+			std::string name = "Group" + std::to_string(i->gid);
 
 			RegCreateKey(hKeybase, name.c_str(), &hKeyStore);
 			RegSetValueEx(hKeyStore, "Name", 0, REG_SZ, (BYTE *) i->name.c_str(), (DWORD) i->name.length());
@@ -1110,7 +1110,7 @@ namespace AlienFX_SDK {
 		}
 
 		for (auto i = grids.begin(); i != grids.end(); i++) {
-			string name = "Grid" + to_string(i->id);
+			std::string name = "Grid" + std::to_string(i->id);
 			RegCreateKey(hKeybase, name.c_str(), &hKeyStore);
 			RegSetValueEx(hKeyStore, "Name", 0, REG_SZ, (BYTE*)i->name.c_str(), (DWORD)i->name.length());
 			DWORD sizes = ((DWORD)i->x << 8) | i->y;
