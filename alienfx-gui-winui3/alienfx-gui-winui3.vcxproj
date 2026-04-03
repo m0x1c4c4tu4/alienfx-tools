@@ -233,6 +233,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Midl Include="Controls\ColorButton.idl" />
+    <Midl Include="Controls\DeviceCard.idl" />
+    <Midl Include="Controls\FanCurveControl.idl" />
+    <Midl Include="Controls\FreqBarsControl.idl" />
+    <Midl Include="Controls\GaugeControl.idl" />
+    <Midl Include="Controls\LedGridControl.idl" />
+    <Midl Include="Dialogs\KeyPressDialog.idl" />
+    <Midl Include="Dialogs\WhiteBalanceDialog.idl" />
+    <Midl Include="Dialogs\ZoneSelectDialog.idl" />
+    <Midl Include="Pages\AmbientPage.idl" />
+    <Midl Include="Pages\ColorsPage.idl" />
+    <Midl Include="Pages\DashboardPage.idl" />
+    <Midl Include="Pages\DevicesPage.idl" />
+    <Midl Include="Pages\EventsPage.idl" />
+    <Midl Include="Pages\FansPage.idl" />
+    <Midl Include="Pages\GridPage.idl" />
+    <Midl Include="Pages\HapticsPage.idl" />
+    <Midl Include="Pages\LightingPage.idl" />
+    <Midl Include="Pages\ProfilesPage.idl" />
+    <Midl Include="Pages\SettingsPage.idl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Image Include="Assets\Logo.png" />
   </ItemGroup>
 

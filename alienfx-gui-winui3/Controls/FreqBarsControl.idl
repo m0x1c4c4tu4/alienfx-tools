@@ -1,0 +1,1 @@
+namespace AlienFX.Controls { runtimeclass FreqBarsControl { FreqBarsControl(); } }
